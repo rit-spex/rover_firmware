@@ -18,6 +18,8 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+import roversPackage::*;
+
 module urcRover #(
     parameter SYSCLK_FREQ = 100_000_000
 )(
@@ -44,6 +46,13 @@ clk_wiz_0 clkgen(
     .resetn  (sysrstn ),
     .clk_out1(clk_100M)
 );
+
+`ifdef DEBUG
+    ila_0 topLevel_ILA(
+        .clk(clk_100M),
+        .probe0(sysrstn)
+    );
+`endif
 
 //////////////////////////////////////////////////////////////////////////////////
 // Module Declarations
