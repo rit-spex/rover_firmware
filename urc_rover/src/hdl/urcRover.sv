@@ -24,12 +24,20 @@ module urcRover #(
     parameter SYSCLK_FREQ = 100_000_000
 )(
     input OSCCLK,
-    input EXTRST
+    input EXTRST,
+
+    output UART_TX
 );
 
 wire clk_100M; //main system clock
-
 wire sysrstn;
+
+wire uartStart;
+wire uartBusy;
+wire uartReady;
+
+wire bus08_t uartData;
+
 
 //////////////////////////////////////////////////////////////////////////////////
 // Top level Logic
@@ -58,6 +66,30 @@ clk_wiz_0 clkgen(
 // Module Declarations
 //////////////////////////////////////////////////////////////////////////////////
 
+serialController #(
+    .CLKFREQ(SYSCLK_FREQ)
+) serialFormat (
+    .sclk(clk_100M),
+    .rstn(sysrstn),
+
+    .uartReady(uartReady),
+        
+    .dataReady(uartStart),
+    .outByte(uartData)
+);
+
+uartBlaster #(
+    .CLKFREQ(SYSCLK_FREQ),
+    .BAUDRATE(115200)
+) gottaBlast (
+    .clk(clk_100M),
+    .start(uartStart),
+    .data(uartData),
+
+    .uartTx(UART_TX),
+    .busy(uartBusy),
+    .ready(uartReady)
+);
 
 
 endmodule:urcRover

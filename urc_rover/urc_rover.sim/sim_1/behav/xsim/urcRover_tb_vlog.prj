@@ -1,0 +1,15 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../urc_rover.gen/sources_1/ip/clk_wiz_0" \
+"../../../../urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v" \
+"../../../../urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v" \
+
+sv xil_defaultlib  --include "../../../../urc_rover.gen/sources_1/ip/clk_wiz_0" \
+"../../../../src/hdl/roversPackage.sv" \
+"../../../../src/hdl/urcRover.sv" \
+"../../../../src/sim/urcRover_tb.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
