@@ -21,10 +21,10 @@
 package roversPackage;
 
     //basic typedefs
-    typedef logic [32:0] bus32_t;
-    typedef logic [16:0] bus16_t;
-    typedef logic [ 8:0] bus08_t;
-    typedef logic [ 4:0] bus04_t;
+    typedef logic [31:0] bus32_t;
+    typedef logic [15:0] bus16_t;
+    typedef logic [ 7:0] bus08_t;
+    typedef logic [ 3:0] bus04_t;
 
     //system defines
     //`define DEBUG; //uncomment to enable debug mode, ILAs, etc.
