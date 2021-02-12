@@ -1,5 +1,5 @@
 # rover_firmware
-repo for the URC rover firmware Vivado project
+repo for the URC rover firmware Vivado project (don't trust the Git appraisal, all written HDL is SystemVerilog
 
 Vivado version: 2020.2
 
