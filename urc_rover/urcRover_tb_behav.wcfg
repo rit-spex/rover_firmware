@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="urcRover_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="\$unit_roversPackage_sv " />
+            <top_module name="glbl" />
+            <top_module name="roversPackage" />
+            <top_module name="urcRover_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="12720000001fs"></ZoomEndTime>
+      <Cursor1Time time="101000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="276"></NameColumnWidth>
+      <ValueColumnWidth column_width="116"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="6" />
+   <wvobject fp_name="/urcRover_tb/DUT/OSCCLK" type="logic">
+      <obj_property name="ElementShortName">OSCCLK</obj_property>
+      <obj_property name="ObjectShortName">OSCCLK</obj_property>
+   </wvobject>
+   <wvobject fp_name="/urcRover_tb/DUT/EXTRST" type="logic">
+      <obj_property name="ElementShortName">EXTRST</obj_property>
+      <obj_property name="ObjectShortName">EXTRST</obj_property>
+   </wvobject>
+   <wvobject fp_name="/urcRover_tb/DUT/clk_100M" type="logic">
+      <obj_property name="ElementShortName">clk_100M</obj_property>
+      <obj_property name="ObjectShortName">clk_100M</obj_property>
+   </wvobject>
+   <wvobject fp_name="/urcRover_tb/DUT/sysrstn" type="logic">
+      <obj_property name="ElementShortName">sysrstn</obj_property>
+      <obj_property name="ObjectShortName">sysrstn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/urcRover_tb/DUT/SYSCLK_FREQ" type="array">
+      <obj_property name="ElementShortName">SYSCLK_FREQ[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SYSCLK_FREQ[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group6" type="group">
+      <obj_property name="label">UART</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/data" type="array">
+         <obj_property name="ElementShortName">data[7:0]</obj_property>
+         <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/uartTx" type="logic">
+         <obj_property name="ElementShortName">uartTx</obj_property>
+         <obj_property name="ObjectShortName">uartTx</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/busy" type="logic">
+         <obj_property name="ElementShortName">busy</obj_property>
+         <obj_property name="ObjectShortName">busy</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/ready" type="logic">
+         <obj_property name="ElementShortName">ready</obj_property>
+         <obj_property name="ObjectShortName">ready</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/BaudTick" type="logic">
+         <obj_property name="ElementShortName">BaudTick</obj_property>
+         <obj_property name="ObjectShortName">BaudTick</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/baudCounter" type="array">
+         <obj_property name="ElementShortName">baudCounter[31:0]</obj_property>
+         <obj_property name="ObjectShortName">baudCounter[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/state" type="array">
+         <obj_property name="ElementShortName">state[3:0]</obj_property>
+         <obj_property name="ObjectShortName">state[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/TxD_datalogic" type="array">
+         <obj_property name="ElementShortName">TxD_datalogic[7:0]</obj_property>
+         <obj_property name="ObjectShortName">TxD_datalogic[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/urcRover_tb/DUT/gottaBlast/muxbit" type="logic">
+         <obj_property name="ElementShortName">muxbit</obj_property>
+         <obj_property name="ObjectShortName">muxbit</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

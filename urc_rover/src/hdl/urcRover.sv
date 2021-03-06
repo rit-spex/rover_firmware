@@ -30,20 +30,20 @@ module urcRover #(
 );
 
 wire clk_100M; //main system clock
-wire sysrstn;
+wire sysRstn;
 
 wire uartStart;
 wire uartBusy;
 wire uartReady;
 
-wire bus08_t uartData;
+wire [7:0] uartData;
 
 
 //////////////////////////////////////////////////////////////////////////////////
 // Top level Logic
 //////////////////////////////////////////////////////////////////////////////////
 
-assign sysrstn = !EXTRST;
+assign sysRstn = !EXTRST;
 
 //////////////////////////////////////////////////////////////////////////////////
 // IP Modules
@@ -51,14 +51,14 @@ assign sysrstn = !EXTRST;
 
 clk_wiz_0 clkgen(
     .clk_in1 (OSCCLK  ), //12MHz
-    .resetn  (sysrstn ),
+    .resetn  (sysRstn ),
     .clk_out1(clk_100M)
 );
 
 `ifdef DEBUG
     ila_0 topLevel_ILA(
         .clk(clk_100M),
-        .probe0(sysrstn)
+        .probe0(sysRstn)
     );
 `endif
 
@@ -66,11 +66,23 @@ clk_wiz_0 clkgen(
 // Module Declarations
 //////////////////////////////////////////////////////////////////////////////////
 
+railSensors #(
+    .SYSCLK_FREQ(SYSCLK_FREQ),
+    .NUMADCS(5)
+) sensing (
+    .sclk(clk_100M),
+    .rstn(sysRstn),
+    .sdat(RAIL_SDAT),
+    .cs(RAIL_CS),
+    .MCLK(RAIL_MCLK),
+    .outData(railOutData)
+);
+
 serialController #(
     .CLKFREQ(SYSCLK_FREQ)
 ) serialFormat (
     .sclk(clk_100M),
-    .rstn(sysrstn),
+    .rstn(sysRstn),
 
     .uartReady(uartReady),
         
