@@ -70,7 +70,7 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param synth.incrementalSynthesisCache C:/Users/Alex/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-8616-Alex-PC/incrSyn
+set_param synth.incrementalSynthesisCache C:/Users/Alex/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-10844-Alex-PC/incrSyn
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -92,6 +92,8 @@ OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/roversPackage.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/AD7478.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/railSensors.sv}
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/serialController.sv}
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/uartBlaster.sv}
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv}

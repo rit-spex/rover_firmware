@@ -21,17 +21,17 @@
 import roversPackage::*;
 
 module AD7478 #(
-    parameter SYSCLK_FREQ = 100_000_000;
+    parameter SYSCLK_FREQ = 100_000_000
 )(
     input logic sclk,
     input logic rstn,
 
     input logic sdat,
     
-    output logic cs= 0,
-    output logic mclk = 0,
+    output logic cs,
+    output logic mclk,
 
-    output bus08_t outData = 0,
+    output bus08_t outData
 );
 
 always_ff @( sclk ) begin : Serial

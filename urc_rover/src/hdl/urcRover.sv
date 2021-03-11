@@ -74,7 +74,7 @@ railSensors #(
     .rstn(sysRstn),
     .sdat(RAIL_SDAT),
     .cs(RAIL_CS),
-    .MCLK(RAIL_MCLK),
+    .mclk(RAIL_MCLK),
     .outData(railOutData)
 );
 

@@ -21,7 +21,7 @@
 import roversPackage::*;
 
 module railSensors #(
-    parameter SYSCLK_FREQ = 100_000_000;
+    parameter SYSCLK_FREQ = 100_000_000,
     parameter NUMADCS = 5 //number of AD7478s to control
 ) (
     input logic sclk,
@@ -31,18 +31,18 @@ module railSensors #(
     input logic [NUMADCS-1:0] sdat,
     
     //ADC control lines
-    output logic cs = 0,
-    output logic mclk = 0,
+    output logic cs,
+    output logic mclk,
 
     //output 2D vector of 8bit data values
-    output logic [NUMADCS-1:0] outData bus08_t = 0
+    output logic [NUMADCS-1:0] [7:0] outData
 );
 
 genvar i;
 
 //generate instantiations of ADC modules
 generate 
-    for (i = 0; i < NUMADCS; i = i + 1;) begin
+    for (i = 0; i < NUMADCS; i = i + 1) begin
         AD7478 eightBitADC (
             .sclk(sclk),
             .rstn(rstn),
