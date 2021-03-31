@@ -25,9 +25,25 @@ module urcRover_tb;
     logic OSCCLK_tb = 0;
     logic SYSRST_tb = 1;
 
-    urcRover DUT (
+    logic adcCS;
+    logic adcmclk;
+    wire adcsdat;
+
+    urcRover #(
+        .NUM_ADCS(1)
+    ) DUT (
         .OSCCLK(OSCCLK_tb),
-        .EXTRST(SYSRST_tb)
+        .EXTRST(SYSRST_tb),
+
+        .ADC_CS(adcCS),
+        .ADC_MCLK(adcmclk),
+        .ADC_SDAT(adcsdat)
+    );
+
+    AD7478_tb adc (
+        .SCLK(adcmclk),
+        .CS(adcCS),
+        .SDAT(adcsdat)
     );
 
     //12MHz oscillator
@@ -36,6 +52,16 @@ module urcRover_tb;
            #41.66666666666666666666666;
            OSCCLK_tb <= ~OSCCLK_tb;
        end 
+    end
+
+    initial begin
+        adcmclk <= 0;
+        adcCS <= 1;
+
+        forever begin
+            #50
+            adcmclk = ~adcmclk;
+        end
     end
 
     //wait 1us to disable reset - allows clock converter to start up properly in sim

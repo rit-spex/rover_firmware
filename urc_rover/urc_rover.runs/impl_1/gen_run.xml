@@ -1,80 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1615423240">
-  <File Type="BITSTR-BMM" Name="urcRover_bd.bmm"/>
-  <File Type="OPT-METHODOLOGY-DRC" Name="urcRover_methodology_drc_opted.rpt"/>
-  <File Type="INIT-TIMING" Name="urcRover_timing_summary_init.rpt"/>
   <File Type="ROUTE-PWR" Name="urcRover_power_routed.rpt"/>
   <File Type="PA-TCL" Name="urcRover.tcl"/>
-  <File Type="OPT-TIMING" Name="urcRover_timing_summary_opted.rpt"/>
-  <File Type="OPT-DCP" Name="urcRover_opt.dcp"/>
   <File Type="ROUTE-PWR-SUM" Name="urcRover_power_summary_routed.pb"/>
   <File Type="REPORTS-TCL" Name="urcRover_reports.tcl"/>
+  <File Type="BITSTR-MSK" Name="urcRover.msk"/>
+  <File Type="ROUTE-CLK" Name="urcRover_clock_utilization_routed.rpt"/>
+  <File Type="RDI-RDI" Name="urcRover.vdi"/>
+  <File Type="BG-BIT" Name="urcRover.bit"/>
+  <File Type="BG-DRC" Name="urcRover.drc"/>
+  <File Type="BG-BGN" Name="urcRover.bgn"/>
+  <File Type="BG-BIN" Name="urcRover.bin"/>
+  <File Type="BITSTR-RBT" Name="urcRover.rbt"/>
+  <File Type="BITSTR-NKY" Name="urcRover.nky"/>
+  <File Type="BITSTR-BMM" Name="urcRover_bd.bmm"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="urcRover_methodology_drc_routed.rpt"/>
+  <File Type="BITSTR-MMI" Name="urcRover.mmi"/>
+  <File Type="BITSTR-SYSDEF" Name="urcRover.sysdef"/>
+  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
+  <File Type="BITSTR-LTX" Name="urcRover.ltx"/>
+  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <File Type="OPT-DRC" Name="urcRover_drc_opted.rpt"/>
   <File Type="OPT-HWDEF" Name="urcRover.hwdef"/>
-  <File Type="PWROPT-DCP" Name="urcRover_pwropt.dcp"/>
-  <File Type="PWROPT-DRC" Name="urcRover_drc_pwropted.rpt"/>
-  <File Type="PWROPT-TIMING" Name="urcRover_timing_summary_pwropted.rpt"/>
-  <File Type="PLACE-DCP" Name="urcRover_placed.dcp"/>
   <File Type="PLACE-IO" Name="urcRover_io_placed.rpt"/>
-  <File Type="PLACE-CLK" Name="urcRover_clock_utilization_placed.rpt"/>
   <File Type="PLACE-UTIL" Name="urcRover_utilization_placed.rpt"/>
   <File Type="PLACE-UTIL-PB" Name="urcRover_utilization_placed.pb"/>
   <File Type="PLACE-CTRL" Name="urcRover_control_sets_placed.rpt"/>
-  <File Type="PLACE-SIMILARITY" Name="urcRover_incremental_reuse_placed.rpt"/>
   <File Type="PLACE-PRE-SIMILARITY" Name="urcRover_incremental_reuse_pre_placed.rpt"/>
-  <File Type="PLACE-TIMING" Name="urcRover_timing_summary_placed.rpt"/>
-  <File Type="POSTPLACE-PWROPT-DCP" Name="urcRover_postplace_pwropt.dcp"/>
-  <File Type="BG-BIN" Name="urcRover.bin"/>
-  <File Type="POSTPLACE-PWROPT-TIMING" Name="urcRover_timing_summary_postplace_pwropted.rpt"/>
-  <File Type="PHYSOPT-DCP" Name="urcRover_physopt.dcp"/>
-  <File Type="PHYSOPT-DRC" Name="urcRover_drc_physopted.rpt"/>
-  <File Type="BITSTR-MSK" Name="urcRover.msk"/>
-  <File Type="PHYSOPT-TIMING" Name="urcRover_timing_summary_physopted.rpt"/>
-  <File Type="ROUTE-ERROR-DCP" Name="urcRover_routed_error.dcp"/>
-  <File Type="ROUTE-DCP" Name="urcRover_routed.dcp"/>
-  <File Type="ROUTE-BLACKBOX-DCP" Name="urcRover_routed_bb.dcp"/>
   <File Type="ROUTE-DRC" Name="urcRover_drc_routed.rpt"/>
   <File Type="ROUTE-DRC-PB" Name="urcRover_drc_routed.pb"/>
-  <File Type="ROUTE-DRC-RPX" Name="urcRover_drc_routed.rpx"/>
-  <File Type="BITSTR-MMI" Name="urcRover.mmi"/>
-  <File Type="ROUTE-METHODOLOGY-DRC" Name="urcRover_methodology_drc_routed.rpt"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="urcRover_methodology_drc_routed.rpx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="urcRover_methodology_drc_routed.pb"/>
   <File Type="ROUTE-PWR-RPX" Name="urcRover_power_routed.rpx"/>
   <File Type="ROUTE-STATUS" Name="urcRover_route_status.rpt"/>
   <File Type="ROUTE-STATUS-PB" Name="urcRover_route_status.pb"/>
+  <File Type="ROUTE-DCP" Name="urcRover_routed.dcp"/>
+  <File Type="ROUTE-ERROR-DCP" Name="urcRover_routed_error.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="urcRover_routed_bb.dcp"/>
   <File Type="ROUTE-TIMINGSUMMARY" Name="urcRover_timing_summary_routed.rpt"/>
   <File Type="ROUTE-TIMING-PB" Name="urcRover_timing_summary_routed.pb"/>
   <File Type="ROUTE-TIMING-RPX" Name="urcRover_timing_summary_routed.rpx"/>
-  <File Type="ROUTE-SIMILARITY" Name="urcRover_incremental_reuse_routed.rpt"/>
-  <File Type="ROUTE-CLK" Name="urcRover_clock_utilization_routed.rpt"/>
   <File Type="ROUTE-BUS-SKEW" Name="urcRover_bus_skew_routed.rpt"/>
   <File Type="ROUTE-BUS-SKEW-PB" Name="urcRover_bus_skew_routed.pb"/>
   <File Type="ROUTE-BUS-SKEW-RPX" Name="urcRover_bus_skew_routed.rpx"/>
+  <File Type="OPT-DCP" Name="urcRover_opt.dcp"/>
+  <File Type="PLACE-DCP" Name="urcRover_placed.dcp"/>
+  <File Type="PWROPT-DCP" Name="urcRover_pwropt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="urcRover_postplace_pwropt.dcp"/>
+  <File Type="PHYSOPT-DCP" Name="urcRover_physopt.dcp"/>
   <File Type="POSTROUTE-PHYSOPT-DCP" Name="urcRover_postroute_physopt.dcp"/>
   <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="urcRover_postroute_physopt_bb.dcp"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="urcRover_timing_summary_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="urcRover_timing_summary_postroute_physopted.pb"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="urcRover_timing_summary_postroute_physopted.rpx"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="urcRover_bus_skew_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="urcRover_bus_skew_postroute_physopted.pb"/>
-  <File Type="BG-BIT" Name="urcRover.bit"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="urcRover_bus_skew_postroute_physopted.rpx"/>
-  <File Type="BITSTR-RBT" Name="urcRover.rbt"/>
-  <File Type="BITSTR-NKY" Name="urcRover.nky"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="urcRover_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-DRC-RPX" Name="urcRover_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="urcRover_methodology_drc_routed.rpx"/>
   <File Type="PDI-FILE" Name="urcRover.pdi"/>
   <File Type="RCFI_FILE" Name="urcRover.rcfi"/>
   <File Type="CFI_FILE" Name="urcRover.cfi"/>
   <File Type="RNPI_FILE" Name="urcRover.rnpi"/>
   <File Type="NPI_FILE" Name="urcRover.npi"/>
   <File Type="RBD_FILE" Name="urcRover.rbd"/>
-  <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
-  <File Type="BITSTR-LTX" Name="urcRover.ltx"/>
-  <File Type="BITSTR-SYSDEF" Name="urcRover.sysdef"/>
-  <File Type="BG-BGN" Name="urcRover.bgn"/>
-  <File Type="BG-DRC" Name="urcRover.drc"/>
-  <File Type="RDI-RDI" Name="urcRover.vdi"/>
-  <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/src/hdl/roversPackage.sv">
@@ -156,6 +138,7 @@
     <Step Id="write_bitstream">
       <Option Id="BinFile">1</Option>
     </Step>
+    <Step Id="write_device_image"/>
   </Strategy>
   <BlockFileSet Type="BlockSrcs" Name="clk_wiz_0"/>
 </GenRun>

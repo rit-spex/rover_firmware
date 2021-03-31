@@ -21,12 +21,18 @@
 import roversPackage::*;
 
 module urcRover #(
-    parameter SYSCLK_FREQ = 100_000_000
+    parameter SYSCLK_FREQ = 100_000_000,
+    parameter NUM_ADCS = 5
 )(
     input OSCCLK,
     input EXTRST,
 
-    output UART_TX
+    output UART_TX,
+
+    input [NUM_ADCS-1:0] ADC_SDAT,
+    output ADC_CS,
+    output ADC_MCLK
+    
 );
 
 wire clk_100M; //main system clock
@@ -68,13 +74,13 @@ clk_wiz_0 clkgen(
 
 railSensors #(
     .SYSCLK_FREQ(SYSCLK_FREQ),
-    .NUMADCS(5)
+    .NUMADCS(NUM_ADCS)
 ) sensing (
     .sclk(clk_100M),
     .rstn(sysRstn),
-    .sdat(RAIL_SDAT),
-    .cs(RAIL_CS),
-    .mclk(RAIL_MCLK),
+    .sdat(ADC_SDAT),
+    .cs(ADC_CS),
+    .mclk(ADC_MCLK),
     .outData(railOutData)
 );
 
