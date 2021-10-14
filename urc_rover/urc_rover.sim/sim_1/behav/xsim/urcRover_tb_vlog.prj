@@ -1,6 +1,16 @@
 # compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../urc_rover.gen/sources_1/ip/clk_wiz_0" \
+"../../../../urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v" \
+"../../../../urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v" \
+
 sv xil_defaultlib  --include "../../../../urc_rover.gen/sources_1/ip/clk_wiz_0" \
+"../../../../src/hdl/roversPackage.sv" \
+"../../../../src/hdl/AD7478.sv" \
 "../../../../src/sim/AD7478_tb.sv" \
+"../../../../src/hdl/railSensors.sv" \
+"../../../../src/hdl/serialController.sv" \
+"../../../../src/hdl/uartBlaster.sv" \
+"../../../../src/hdl/urcRover.sv" \
 "../../../../src/sim/urcRover_tb.sv" \
 
 # compile glbl module

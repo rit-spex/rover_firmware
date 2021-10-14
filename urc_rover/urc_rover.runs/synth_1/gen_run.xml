@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1615423240">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1631994826">
   <File Type="PA-TCL" Name="urcRover.tcl"/>
   <File Type="REPORTS-TCL" Name="urcRover_reports.tcl"/>
   <File Type="RDS-RDS" Name="urcRover.vds"/>
-  <File Type="RDS-UTIL" Name="urcRover_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="urcRover_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="urcRover.dcp"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>

@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.tcl"
+  variable script "C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.tcl"
   variable category "vivado_synth"
 }
 
@@ -70,9 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param synth.incrementalSynthesisCache C:/Users/Alex/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-10844-Alex-PC/incrSyn
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
@@ -80,29 +77,28 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir {D:/SPEX projects/rover_firmware/urc_rover/urc_rover.cache/wt} [current_project]
-set_property parent.project_path {D:/SPEX projects/rover_firmware/urc_rover/urc_rover.xpr} [current_project]
+set_property webtalk.parent_dir C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.cache/wt [current_project]
+set_property parent.project_path C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.xpr [current_project]
 set_property XPM_LIBRARIES XPM_CDC [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property board_part digilentinc.com:cmod_a7-35t:part0:1.1 [current_project]
-set_property ip_output_repo {d:/SPEX projects/rover_firmware/urc_rover/urc_rover.cache/ip} [current_project]
+set_property ip_output_repo c:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
-  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/roversPackage.sv}
-  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/AD7478.sv}
-  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/railSensors.sv}
-  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/serialController.sv}
-  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/uartBlaster.sv}
-  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv}
+  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/roversPackage.sv
+  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/AD7478.sv
+  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/railSensors.sv
+  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/serialController.sv
+  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/uartBlaster.sv
+  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/urcRover.sv
 }
-read_ip -quiet {{D:/SPEX projects/rover_firmware/urc_rover/urc_rover.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
-set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc}}]
-set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc}}]
-set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_late.xdc}}]
-set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc}}]
+read_ip -quiet C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+set_property used_in_implementation false [get_files -all c:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc]
+set_property used_in_implementation false [get_files -all c:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
+set_property used_in_implementation false [get_files -all c:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_late.xdc]
+set_property used_in_implementation false [get_files -all c:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -113,8 +109,8 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc {{D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc}}
-set_property used_in_implementation false [get_files {{D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc}}]
+read_xdc C:/Xilinx/Projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc
+set_property used_in_implementation false [get_files C:/Xilinx/Projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]

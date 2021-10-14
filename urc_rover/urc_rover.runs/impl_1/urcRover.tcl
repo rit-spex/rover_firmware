@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/impl_1/urcRover.tcl"
+  variable script "C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.runs/impl_1/urcRover.tcl"
   variable category "vivado_impl"
 }
 
@@ -115,8 +115,6 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -124,26 +122,24 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param chipscope.maxJobs 1
-  set_param synth.incrementalSynthesisCache C:/Users/Alex/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-10844-Alex-PC/incrSyn
+  set_param chipscope.maxJobs 2
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7a35tcpg236-1
-  set_property board_part digilentinc.com:cmod_a7-35t:part0:1.1 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir {D:/SPEX projects/rover_firmware/urc_rover/urc_rover.cache/wt} [current_project]
-  set_property parent.project_path {D:/SPEX projects/rover_firmware/urc_rover/urc_rover.xpr} [current_project]
-  set_property ip_output_repo {{D:/SPEX projects/rover_firmware/urc_rover/urc_rover.cache/ip}} [current_project]
+  set_property webtalk.parent_dir C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.cache/wt [current_project]
+  set_property parent.project_path C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.xpr [current_project]
+  set_property ip_output_repo C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES XPM_CDC [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet {{D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.dcp}}
-  read_ip -quiet {{D:/SPEX projects/rover_firmware/urc_rover/urc_rover.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
+  add_files -quiet C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.dcp
+  read_ip -quiet C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
 OPTRACE "read constraints: implementation" START { }
-  read_xdc {{D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc}}
+  read_xdc C:/Xilinx/Projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }
@@ -300,35 +296,4 @@ if {$rc} {
 
 OPTRACE "route_design misc" END { }
 OPTRACE "Phase: Route Design" END { }
-OPTRACE "Phase: Write Bitstream" START { ROLLUP_AUTO }
-OPTRACE "write_bitstream setup" START { }
-start_step write_bitstream
-set ACTIVE_STEP write_bitstream
-set rc [catch {
-  create_msg_db write_bitstream.pb
-OPTRACE "read constraints: write_bitstream" START { }
-OPTRACE "read constraints: write_bitstream" END { }
-  set_property XPM_LIBRARIES XPM_CDC [current_project]
-  catch { write_mem_info -force -no_partial_mmi urcRover.mmi }
-OPTRACE "write_bitstream setup" END { }
-OPTRACE "write_bitstream" START { }
-  write_bitstream -force urcRover.bit -bin_file
-OPTRACE "write_bitstream" END { }
-OPTRACE "write_bitstream misc" START { }
-OPTRACE "read constraints: write_bitstream_post" START { }
-OPTRACE "read constraints: write_bitstream_post" END { }
-  catch {write_debug_probes -quiet -force urcRover}
-  catch {file copy -force urcRover.ltx debug_nets.ltx}
-  close_msg_db -file write_bitstream.pb
-} RESULT]
-if {$rc} {
-  step_failed write_bitstream
-  return -code error $RESULT
-} else {
-  end_step write_bitstream
-  unset ACTIVE_STEP 
-}
-
-OPTRACE "write_bitstream misc" END { }
-OPTRACE "Phase: Write Bitstream" END { }
 OPTRACE "impl_1" END { }
