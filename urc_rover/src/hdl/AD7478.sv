@@ -21,7 +21,7 @@
 import roversPackage::*;
 typedef enum logic[2:0] {adcIDLE, PREZEROES, DATAPARSE, POSTZEROES, DATATRANSFER} adcState;
 
-(* fsm_encoding = "none" *) adcState currentState, nextState;
+//(* fsm_encoding = "none" *) adcState currentState, nextState = adcIDLE;
 
 module AD7478 #(
     parameter SYSCLK_FREQ = 100_000_000
@@ -31,123 +31,88 @@ module AD7478 #(
 
     input logic sdat,
     
-    output logic cs,
-    output logic mclk,
+    output logic cs = 1,
+    output logic mclk = 0,
 
-    output bus08_t outData
+    output bus08_t outData = 0
 );
 
-    logic [6:0] idleTimeCounter = 7'b1100100; //1 us idle time, based off 100MHz sclk
     logic adcStart;
-    logic [1:0] preDataCounter = 2'b11;     //pre dataparse zeroes counter
-    logic [2:0] postDataCounter = 3'b100;   //post dataparse zeroes counter
+    logic [31:0] preDataCounter = 3;     //pre dataparse zeroes counter
+    logic [31:0] postDataCounter = 3;   //post dataparse zeroes counter
     logic [2:0] clkCounter = 3'b101;        //mclk counter
-    logic [2:0] dataCounter = 3'b111;       //8 bits of data
+    logic [31:0] dataCounter = 7;       //8 bits of data
     logic [7:0] tempData = 0;
-    
-always_ff @( sclk ) begin : Serial
+    (* fsm_encoding = "none" *) adcState currentState = adcIDLE;  
+    localparam [31:0] countMax = (SYSCLK_FREQ/5) /1_000_000;
+    logic [31:0] idleTimeCounter = countMax; //1 us idle time, based off 100MHz sclk
+     
+always_ff @( posedge mclk ) begin : Serial
     if(!rstn) begin
         outData <= 0;
-        cs <= 0;
+        cs <= 1;
         mclk <= 0;
     end 
     else begin
-        currentState <= nextState;
+        //currentState <= nextState;
         case( currentState )   
             adcIDLE : begin
-                if( adcStart != 1'b1 ) begin
+                if( idleTimeCounter != 0 ) begin
                     cs <= 1;
-                    //latch output data
-                   // outData <= tempData; //change this kater
+                    idleTimeCounter <= idleTimeCounter - 1'b1;
+                    currentState <= adcIDLE;
                 end
-                else cs <= 0;
-                
-                if (adcStart == 1'b1) nextState <= PREZEROES;
-                else nextState <= adcIDLE;
+                else begin
+                    cs <= 0;
+                    idleTimeCounter <= countMax;
+                    currentState <= PREZEROES;
+                end                        
             end      
             PREZEROES : begin
                 cs <= 0;
                 
                 preDataCounter <= preDataCounter - 1'b1;
-                if( preDataCounter != 2'b00) nextState <= PREZEROES;
+                if( preDataCounter != 2'b00) currentState <= PREZEROES;
                 else begin
-                    nextState <= DATAPARSE;
-                    preDataCounter <= 2'b11;
+                    currentState <= DATAPARSE;
+                    preDataCounter <= 3;
                 end                
             end
             DATAPARSE : begin
                 cs <= 0;
                 tempData <= {tempData[6:0], sdat};
 
-                dataCounter <= dataCounter - 1'b1;
-                if( dataCounter >= 3'b000) nextState <= DATAPARSE;
+                
+                if( dataCounter > 0) begin
+                    currentState <= DATAPARSE;
+                    dataCounter <= dataCounter - 1'b1;
+                end
                 else begin
-                    nextState <= POSTZEROES;
-                    dataCounter <= 3'b111;
+                    currentState <= POSTZEROES;
+                    dataCounter <= 7;
                 end                    
             end 
             POSTZEROES : begin
                 cs <= 0;
                
-                postDataCounter <= postDataCounter - 1'b1;
                 if( postDataCounter == 3'b000) begin
-                    //nextState = adcIDLE;
-                    nextState <= DATATRANSFER;
+                    currentState <= DATATRANSFER;
+                    postDataCounter = 3;
                 end
-                else nextState <= POSTZEROES;                
+                else begin
+                    currentState <= POSTZEROES;
+                    postDataCounter <= postDataCounter - 1'b1;
+                end                
             end
             DATATRANSFER : begin
                 cs <= 0;
                 outData <= tempData;
-                nextState <= adcIDLE;
+                currentState <= adcIDLE;
             end
         endcase      
     end
 end : Serial
     
-always_ff @( sclk ) begin
-    if( idleTimeCounter != 7'b0000000 ) begin
-        adcStart <= 1'b0;
-        idleTimeCounter <= idleTimeCounter - 1'b1;
-    end
-    else begin
-        adcStart <= 1'b1;
-        idleTimeCounter <= 7'b1100100;
-    end  
-end
-    
-/*always_comb begin
-    case ( currentState )
-        adcIDLE : begin
-            if (adcStart == 1'b1) nextState = PREZEROES;
-            else nextState = adcIDLE;
-        end
-        PREZEROES : begin
-            preDataCounter = preDataCounter - 1'b1;
-            if( preDataCounter != 2'b00) nextState = PREZEROES;
-            else begin
-                nextState = DATAPARSE;
-                preDataCounter = 2'b11;
-            end
-        end 
-        DATAPARSE : begin
-            dataCounter = dataCounter - 1'b1;
-            if( dataCounter >= 3'b000) nextState = DATAPARSE;
-            else begin
-                nextState = POSTZEROES;
-                dataCounter = 3'b111;
-            end
-        end
-        POSTZEROES : begin
-            postDataCounter = postDataCounter - 1'b1;
-            if( postDataCounter == 3'b000) begin
-                nextState = adcIDLE;
-            end
-            else nextState = POSTZEROES;
-        end  
-    endcase 
-end */  
-
 always @( posedge sclk ) begin
     clkCounter <= clkCounter - 1'b1;
     if( clkCounter == 3'b000 ) begin
