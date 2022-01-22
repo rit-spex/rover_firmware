@@ -40,4 +40,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log urcRover.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source urcRover.tcl
+EAStep vivado -log AD7478.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source AD7478.tcl

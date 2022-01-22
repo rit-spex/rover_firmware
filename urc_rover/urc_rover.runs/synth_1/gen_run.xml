@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1631994826">
-  <File Type="PA-TCL" Name="urcRover.tcl"/>
-  <File Type="REPORTS-TCL" Name="urcRover_reports.tcl"/>
-  <File Type="RDS-RDS" Name="urcRover.vds"/>
-  <File Type="RDS-DCP" Name="urcRover.dcp"/>
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1642820543">
+  <File Type="PA-TCL" Name="AD7478.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="AD7478_drc_synth.rpt"/>
+  <File Type="REPORTS-TCL" Name="AD7478_reports.tcl"/>
+  <File Type="RDS-RDS" Name="AD7478.vds"/>
+  <File Type="RDS-UTIL" Name="AD7478_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="AD7478_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="AD7478.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="AD7478_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="AD7478_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/src/hdl/roversPackage.sv">
@@ -22,6 +27,7 @@
     </File>
     <File Path="$PPRDIR/src/hdl/railSensors.sv">
       <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -29,6 +35,7 @@
     </File>
     <File Path="$PPRDIR/src/hdl/serialController.sv">
       <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -36,6 +43,7 @@
     </File>
     <File Path="$PPRDIR/src/hdl/uartBlaster.sv">
       <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -43,6 +51,23 @@
     </File>
     <File Path="$PPRDIR/src/hdl/urcRover.sv">
       <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/src/hdl/dec256sinc24b.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/src/hdl/AMC1303Mx.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -50,8 +75,7 @@
     </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="urcRover"/>
-      <Option Name="TopAutoSet" Val="TRUE"/>
+      <Option Name="TopModule" Val="AD7478"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
@@ -73,8 +97,11 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020"/>
-    <Step Id="synth_design"/>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+      <Desc>Vivado Synthesis Defaults</Desc>
+    </StratHandle>
+    <Step Id="synth_design">
+      <Option Id="FlattenHierarchy">1</Option>
+    </Step>
   </Strategy>
-  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_0"/>
 </GenRun>
