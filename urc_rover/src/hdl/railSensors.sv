@@ -31,27 +31,42 @@ module railSensors #(
     input logic [NUMADCS-1:0] sdat,
     
     //ADC control lines
-    output logic cs,
-    output logic mclk,
+    //output logic cs,
+    //output logic mclk,
 
     //output 2D vector of 8bit data values
-    output logic [NUMADCS-1:0] [7:0] outData
+    output logic [NUMADCS-1:0] [7:0] outData,
+    
+    // the decimation filter outputs a data_en signal,
+    // outputs said signal downstream
+    output logic data_ready
 );
 
 genvar i;
 
 //generate instantiations of ADC modules
 generate 
-    for (i = 0; i < NUMADCS; i = i + 1) begin
-        AD7478 eightBitADC (
-            .sclk(sclk),
-            .rstn(rstn),
+    for (i = 0; i < NUMADCS; i = i + 1)
+      begin
+        AMC1303Mx eightBitADC (
+            .mclk(sclk),
+            .resetn(rstn),
             .sdat(sdat[i]),
-            .cs(cs),
-            .mclk(mclk),
-            .outData(outData[i])
+            .dec_filter_data_en(data_ready),
+            .out_data(outData[i])
         );
-    end
+      end
+
+//    for (i = 0; i < NUMADCS; i = i + 1) begin
+//        AD7478 eightBitADC (
+//            .sclk(sclk),
+//           .rstn(rstn),
+//            .sdat(sdat[i]),
+//            .cs(cs),
+//           .mclk(mclk),
+//            .outData(outData[i])
+//        );
+//    end
 endgenerate
 
 endmodule
