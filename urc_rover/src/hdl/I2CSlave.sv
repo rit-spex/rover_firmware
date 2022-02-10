@@ -6,7 +6,7 @@
 // Design Name: 
 // Module Name: I2CSlave
 // Project Name: urc_rover
-// Target Devices: Artix 7 35T
+// Target Devices: Artix 7 35Txvlog
 // Tool Versions: Vivado 2020.2
 // Description: I2C communications bus slave module
 // 
@@ -18,7 +18,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-//import roversPackage::*;
+import roversPackage::*;
 
 module I2CSlave #(
     parameter [6:0]     DEVICE_ADDR = 7'h55,
@@ -50,9 +50,9 @@ logic   outputControl;  //control tri-state outputs
 
 bus04_t bitCounter;
 
-bus08_t             inputShift;
-bus08_t             outputShift;
-bus08_t             indexPointer;
+bus08_t inputShift;
+bus08_t outputShift;
+bus08_t indexPointer;
 
 enum logic [4:0] { IDLE, DEV_ADDR, READ, IDX_PTR, WRITE } state;
 
