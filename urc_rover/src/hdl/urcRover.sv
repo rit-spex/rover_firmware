@@ -72,42 +72,49 @@ clk_wiz_0 clkgen(
 // Module Declarations
 //////////////////////////////////////////////////////////////////////////////////
 
-railSensors #(
-    .SYSCLK_FREQ(SYSCLK_FREQ),
-    .NUMADCS(NUM_ADCS)
-) sensing (
+//railSensors #(
+//    .SYSCLK_FREQ(SYSCLK_FREQ),
+//    .NUMADCS(NUM_ADCS)
+//) sensing (
+//    .sclk(clk_100M),
+//    .rstn(sysRstn),
+//    .sdat(ADC_SDAT),
+//    .cs(ADC_CS),
+//    .mclk(ADC_MCLK),
+//    .outData(railOutData)
+//);
+
+CPUComms #(
+    .SYSCLK_FREQ(SYSCLK_FREQ)
+) comms (
     .sclk(clk_100M),
-    .rstn(sysRstn),
-    .sdat(ADC_SDAT),
-    .cs(ADC_CS),
-    .mclk(ADC_MCLK),
-    .outData(railOutData)
+    .rstn(sysRstn)
 );
 
-serialController #(
-    .CLKFREQ(SYSCLK_FREQ)
-) serialFormat (
-    .sclk(clk_100M),
-    .rstn(sysRstn),
+// serialController #(
+//     .CLKFREQ(SYSCLK_FREQ)
+// ) serialFormat (
+//     .sclk(clk_100M),
+//     .rstn(sysRstn),
 
-    .uartReady(uartReady),
+//     .uartReady(uartReady),
         
-    .dataReady(uartStart),
-    .outByte(uartData)
-);
+//     .dataReady(uartStart),
+//     .outByte(uartData)
+// );
 
-uartBlaster #(
-    .CLKFREQ(SYSCLK_FREQ),
-    .BAUDRATE(115200)
-) gottaBlast (
-    .clk(clk_100M),
-    .start(uartStart),
-    .data(uartData),
+// uartBlaster #(
+//     .CLKFREQ(SYSCLK_FREQ),
+//     .BAUDRATE(115200)
+// ) gottaBlast (
+//     .clk(clk_100M),
+//     .start(uartStart),
+//     .data(uartData),
 
-    .uartTx(UART_TX),
-    .busy(uartBusy),
-    .ready(uartReady)
-);
+//     .uartTx(UART_TX),
+//     .busy(uartBusy),
+//     .ready(uartReady)
+// );
 
 
 endmodule:urcRover

@@ -18,7 +18,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-import roversPackage::*;
+//import roversPackage::*;
 
 module I2CSlave #(
     parameter [6:0]     DEVICE_ADDR = 7'h55,
@@ -26,15 +26,15 @@ module I2CSlave #(
     parameter bus08_t   HI_RD = 8'h0F
 ) (
     //I2C
-    input wire SCL;
-    inout tri SDA;
+    input wire SCL,
+    inout tri SDA,
 
     //FPGA
-    input rstn;
+    input rstn,
 
     //8-bit read/write registers
-    input   bus08_t readReg [HI_RD-1:0];
-    output  bus08_t writeReg [HI_WR-1:0];
+    input   bus08_t readReg [HI_RD-1:0],
+    output  bus08_t writeReg [HI_WR-1:0]
 );
 
 /////////////////////////////////////////////////////////////////////
@@ -48,6 +48,14 @@ logic   stopResetter;   //resets the STOP code detector
 logic   masterAck;      //master acknowledge
 logic   outputControl;  //control tri-state outputs
 
+bus04_t bitCounter;
+
+bus08_t             inputShift;
+bus08_t             outputShift;
+bus08_t             indexPointer;
+
+enum logic [4:0] { IDLE, DEV_ADDR, READ, IDX_PTR, WRITE } state;
+
 wire    rst             = ~rstn;
 wire    startRst        = rst | startResetter;
 wire    stopRst         = rst | stopResetter;
@@ -56,14 +64,6 @@ wire    ackBit          = (bitCounter == 4'h8) && !stopDetect;
 wire    writeStrobe     = (state == WRITE) && ackBit;
 wire    addressDetect   = (inputShift[7:1] == DEVICE_ADDR);
 wire    readWriteBit    = inputShift[0];
-
-bus04_t bitCounter;
-
-bus08_t             inputShift;
-bus08_t             outputShift;
-bus08_t             indexPointer;
-
-enum logic [4:0] { IDLE, DEV_ADDR, READ, IDX_PTR, WRITE } state;
 
 genvar i,j;
 

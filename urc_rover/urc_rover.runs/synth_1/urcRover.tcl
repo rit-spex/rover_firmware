@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/AD7478.tcl"
+  variable script "D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.tcl"
   variable category "vivado_synth"
 }
 
@@ -76,18 +76,28 @@ create_project -in_memory -part xc7a35tcpg236-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.cache/wt [current_project]
-set_property parent.project_path C:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.xpr [current_project]
+set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
+set_property webtalk.parent_dir {D:/SPEX projects/rover_firmware/urc_rover/urc_rover.cache/wt} [current_project]
+set_property parent.project_path {D:/SPEX projects/rover_firmware/urc_rover/urc_rover.xpr} [current_project]
+set_property XPM_LIBRARIES XPM_CDC [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo c:/Xilinx/Projects/rover_firmware/urc_rover/urc_rover.cache/ip [current_project]
+set_property ip_output_repo {d:/SPEX projects/rover_firmware/urc_rover/urc_rover.cache/ip} [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
-  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/roversPackage.sv
-  C:/Xilinx/Projects/rover_firmware/urc_rover/src/hdl/AD7478.sv
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/roversPackage.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/CPUComms.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv}
 }
+read_ip -quiet {{D:/SPEX projects/rover_firmware/urc_rover/urc_rover.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
+set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc}}]
+set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc}}]
+set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_late.xdc}}]
+set_property used_in_implementation false [get_files -all {{d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc}}]
+
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -97,14 +107,14 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Xilinx/Projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc
-set_property used_in_implementation false [get_files C:/Xilinx/Projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc]
+read_xdc {{D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc}}
+set_property used_in_implementation false [get_files {{D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc}}]
 
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top AD7478 -part xc7a35tcpg236-1 -flatten_hierarchy none
+synth_design -top urcRover -part xc7a35tcpg236-1 -flatten_hierarchy none
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"
@@ -114,10 +124,10 @@ if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
 OPTRACE "write_checkpoint" START { CHECKPOINT }
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
-write_checkpoint -force -noxdef AD7478.dcp
+write_checkpoint -force -noxdef urcRover.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
-create_report "synth_1_synth_report_utilization_0" "report_utilization -file AD7478_utilization_synth.rpt -pb AD7478_utilization_synth.pb"
+create_report "synth_1_synth_report_utilization_0" "report_utilization -file urcRover_utilization_synth.rpt -pb urcRover_utilization_synth.pb"
 OPTRACE "synth reports" END { }
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]

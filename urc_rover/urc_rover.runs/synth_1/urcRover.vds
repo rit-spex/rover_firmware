@@ -1,0 +1,233 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Feb 10 17:13:12 2022
+# Process ID: 61052
+# Current directory: D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1
+# Command line: vivado.exe -log urcRover.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source urcRover.tcl
+# Log file: D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.vds
+# Journal file: D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source urcRover.tcl -notrace
+Command: synth_design -top urcRover -part xc7a35tcpg236-1 -flatten_hierarchy none
+Starting synth_design
+INFO: [IP_Flow 19-2162] IP 'clk_wiz_0' is locked:
+* This IP has board specific outputs. Current project board 'unset' and the board 'digilentinc.com:cmod_a7-35t:part0:1.1' used to customize the IP 'clk_wiz_0' do not match.
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 7580
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1017.773 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'urcRover' [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv:23]
+	Parameter SYSCLK_FREQ bound to: 100000000 - type: integer 
+	Parameter NUM_ADCS bound to: 5 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/.Xil/Vivado-61052-Alex-PC/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (1#1) [D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/.Xil/Vivado-61052-Alex-PC/realtime/clk_wiz_0_stub.v:5]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv:89]
+INFO: [Synth 8-6157] synthesizing module 'CPUComms' [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/CPUComms.sv:23]
+	Parameter SYSCLK_FREQ bound to: 100000000 - type: integer 
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/CPUComms.sv:31]
+INFO: [Synth 8-6157] synthesizing module 'I2CSlave' [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv:23]
+	Parameter DEVICE_ADDR bound to: 7'b1010101 
+	Parameter HI_WR bound to: 8'b00001111 
+	Parameter HI_RD bound to: 8'b00001111 
+WARNING: [Synth 8-324] index 15 out of range [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv:203]
+WARNING: [Synth 8-324] index 15 out of range [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv:205]
+WARNING: [Synth 8-324] index 15 out of range [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv:219]
+INFO: [Synth 8-6155] done synthesizing module 'I2CSlave' (2#1) [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv:23]
+INFO: [Synth 8-6155] done synthesizing module 'CPUComms' (3#1) [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/CPUComms.sv:23]
+INFO: [Synth 8-6155] done synthesizing module 'urcRover' (4#1) [D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv:23]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1017.773 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1017.773 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1017.773 ; gain = 0.000
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1017.773 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'clkgen'
+Finished Parsing XDC File [d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'clkgen'
+Parsing XDC File [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc]
+WARNING: [Vivado 12-584] No ports matched 'ADC_SCLK'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:42]
+WARNING: [Vivado 12-584] No ports matched 'RAIL12'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:44]
+WARNING: [Vivado 12-584] No ports matched 'RAIL5'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:45]
+WARNING: [Vivado 12-584] No ports matched 'RAIL3V3'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:46]
+WARNING: [Vivado 12-584] No ports matched 'BATTV'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:47]
+WARNING: [Vivado 12-584] No ports matched 'BATTI'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:48]
+WARNING: [Vivado 12-584] No ports matched 'CHA_TEMP'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:49]
+WARNING: [Vivado 12-584] No ports matched 'BATTA_TEMP'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:50]
+WARNING: [Vivado 12-584] No ports matched 'BATTB_TEMP'. [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc:51]
+Finished Parsing XDC File [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc]
+WARNING: [Project 1-498] One or more constraints failed evaluation while reading constraint file [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc] and the design contains unresolved black boxes. These constraints will be read post-synthesis (as long as their source constraint file is marked as used_in_implementation) and should be applied correctly then. You should review the constraints listed in the file [.Xil/urcRover_propImpl.xdc] and check the run log file to verify that these constraints were correctly applied.
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/SPEX projects/rover_firmware/urc_rover/src/constraints/cmod_pins.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/urcRover_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/urcRover_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1097.082 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1097.082 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property IO_BUFFER_TYPE = NONE for OSCCLK. (constraint file  {d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc}, line 3).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for OSCCLK. (constraint file  {d:/SPEX projects/rover_firmware/urc_rover/urc_rover.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc}, line 4).
+Applied set_property KEEP_HIERARCHY = SOFT for clkgen. (constraint file  auto generated constraint).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'I2CSlave'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              000 |                            00000
+                DEV_ADDR |                              001 |                            00001
+                    READ |                              010 |                            00010
+                 IDX_PTR |                              011 |                            00011
+                   WRITE |                              100 |                            00100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'I2CSlave'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    8 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 1     
++---Registers : 
+	                8 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 6     
++---Muxes : 
+	   2 Input    8 Bit        Muxes := 66    
+	  10 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 23    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+--------------+----------+
+|      |BlackBox name |Instances |
++------+--------------+----------+
+|1     |clk_wiz_0     |         1|
++------+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |clk_wiz |     1|
+|2     |LUT1    |     1|
+|3     |IBUF    |     1|
+|4     |OBUFT   |     3|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1097.082 ; gain = 79.309
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:10 ; elapsed = 00:00:15 . Memory (MB): peak = 1097.082 ; gain = 0.000
+Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1097.082 ; gain = 79.309
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1097.082 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1097.082 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+24 Infos, 15 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1097.082 ; gain = 79.309
+INFO: [Common 17-1381] The checkpoint 'D:/SPEX projects/rover_firmware/urc_rover/urc_rover.runs/synth_1/urcRover.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file urcRover_utilization_synth.rpt -pb urcRover_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Feb 10 17:13:36 2022...

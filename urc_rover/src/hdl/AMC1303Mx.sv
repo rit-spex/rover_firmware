@@ -67,7 +67,7 @@ module AMC1303Mx #(
 // Decimation Filter
 //===================================================================
 dec256sinc24b #(
-    .SYSCLK_FREQ(SYSCLK_FREQ)
+    .dec_rate(64)
 ) decimator (
     .mclk1(mclk),
     .reset(rst),
