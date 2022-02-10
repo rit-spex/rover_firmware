@@ -19,7 +19,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 import roversPackage::*;
-typedef enum logic [7:0] { IDLE, LOADDATA, SENDBYTE, HOLD, WAIT, RESET } fsm_t;
 
 module serialController #(
     parameter CLKFREQ  = 100_000_000
@@ -43,8 +42,7 @@ module serialController #(
     bus32_t count  = 0;
     bus08_t offset = 0;
 
-    (* FSM_ENCODING="ONE_HOT", SAFE_IMPLEMENTATION="NO" *)
-    bus08_t serialState = IDLE;
+    enum logic [7:0] { IDLE, LOADDATA, SENDBYTE, HOLD, WAIT, RESET } serialState = IDLE;
 
 //////////////////////////////////////////////////////////////////////////////////
 // Combinational Logic

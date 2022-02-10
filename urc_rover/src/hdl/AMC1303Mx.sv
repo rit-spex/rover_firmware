@@ -1,3 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company: RIT SPEX
+// Engineer: Cheng Huang
+// 
+// Create Date: 02/06/2022 10:07:42 PM
+// Design Name: 
+// Module Name: AMC1303Mx
+// Project Name: urc_rover
+// Target Devices: Artix 7 35T
+// Tool Versions: Vivado 2020.2
+// Description: AMC1303Mx Sigma-Delta Demodulator
+// 
+// Dependencies: dec256sinc24b - 24b sinc3 decimation filter
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 module AMC1303Mx #(
     parameter SYSCLK_FREQ = 100_000_000
 ) (
