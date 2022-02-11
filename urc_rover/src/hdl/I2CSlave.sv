@@ -79,8 +79,8 @@ always_ff @ (posedge startRst, negedge SDA) begin : startDetector1
         startDetect <= SCL;
 end
 
-always_ff @ (posedge rstn, posedge SCL) begin : startDetector2
-    if (rstn)
+always_ff @ (posedge rst, posedge SCL) begin : startDetector2
+    if (rst)
         startResetter <= 0;
     else
         startResetter <= startDetect;
@@ -97,8 +97,8 @@ always_ff @(posedge stopRst, posedge SDA ) begin : stopDetector1
         stopDetect <= SCL;
 end
 
-always_ff @(posedge rstn, posedge SCL ) begin : stopDetector2
-    if (rstn)
+always_ff @(posedge rst, posedge SCL ) begin : stopDetector2
+    if (rst)
         stopResetter <= 1;
     else
         stopResetter <= stopDetect;
