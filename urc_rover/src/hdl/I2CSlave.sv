@@ -241,9 +241,9 @@ always_ff @( posedge rst, negedge SCL ) begin : outputDriver
         outputControl <= 1'b1;
     end else if (lsbBit) begin
         outputControl <=
-            !(((state == DEV_ADDR) && addressDetect) ||
-              (state == IDX_PTR) ||
-              (state == WRITE));
+                        !(((state == DEV_ADDR) && addressDetect) ||
+                          (state == IDX_PTR) ||
+                          (state == WRITE));
     end else if (ackBit) begin
         //deliver first bit of next slave-to-master transfer if needed
         if (((state == READ) && masterAck) || ((state == DEV_ADDR) && addressDetect && readWriteBit)) begin
