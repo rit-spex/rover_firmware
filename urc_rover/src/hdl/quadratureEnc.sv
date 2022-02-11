@@ -19,8 +19,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module quadratureEnc #(
-    parameter COUNTS_PER_REV = 8192,
-    parameter COUNT_SIZE = 11
+    parameter SYSCLK_FREQ = 100_000_000,
+    parameter ENC_CYCLES_PER_REV = 2048,
+    parameter ENC_COUNTS_PER_REV = ENC_CYCLES_PER_REV * 4,
+    parameter ENC_COUNT_SIZE = $clog2(ENC_COUNTS_PER_REV),
+    parameter SAMPLETIME = 1_000, //sample time, microseconds
+    parameter MAXCOUNT = SYSCLK_FREQ / (SAMPLETIME * 1_000_000) // counts = (counts/second) / ((microseconds * 1,000,000)))
 ) (
     input sclk,
     input rstn,
@@ -31,11 +35,23 @@ module quadratureEnc #(
 
     input home,
 
-    output logic [COUNT_SIZE-1:0] count
+    output logic [ENC_COUNT_SIZE-1:0] count,
+
+    output wire [10:-5] pcSpeed, //11 bits integer, 5 bits fractional
+    output wire [10:-5] ptSpeed  //11 bits integer, 5 bits fractional
 );
+
+    wire [31:0] pcSpeedBig, pcSpeedDenom, pcSpeedNumer;
+    wire [31:0] ptSpeedBig, ptSpeedDenom, ptSpeedNumer;
+
+    logic [31:0] intervalCount, pulses, pulseCount, clocks, clockCount;
+
     logic [2:0] a_delayed, b_delayed;
 
-    //synchro
+/////////////////////////////////////////////////////////////////////
+//SYNCHRO
+/////////////////////////////////////////////////////////////////////
+
     always_ff @(posedge sclk ) begin : synchro
         if (!rstn) begin
             a_delayed <= 0;
@@ -46,12 +62,18 @@ module quadratureEnc #(
         end
     end
 
-    //quad decoding, direction finding
+/////////////////////////////////////////////////////////////////////
+//DECODING
+/////////////////////////////////////////////////////////////////////
+
     wire countEnable = a_delayed[1] ^ a_delayed[2] ^ b_delayed[1] ^ b_delayed[2];
     wire countDir = a_delayed[1] ^ b_delayed[2];
 
-    //counter
-    always_ff @(posedge sclk ) begin : counter
+/////////////////////////////////////////////////////////////////////
+//COUNTER
+/////////////////////////////////////////////////////////////////////
+
+    always_ff @(posedge sclk ) begin : encCounter
         if (!rstn) begin
             count <= 0;
         end else if (home) begin
@@ -59,19 +81,69 @@ module quadratureEnc #(
         end else begin
             if (countEnable) begin
                 if (countDir) begin
-                    if (count == (COUNTS_PER_REV)) begin
-                        count <= 0;
-                    end else begin
                     count <= count + 1;
-                    end
                 end else begin
-                    if (count == 0) begin
-                        count <= COUNTS_PER_REV;
-                    end else begin
                     count <= count - 1;
-                    end
                 end
             end
         end
     end
+
+/////////////////////////////////////////////////////////////////////
+//PULSE COUNTING SPEED
+/////////////////////////////////////////////////////////////////////
+
+    //less accurate at low speeds
+    always_ff @( posedge sclk ) begin : pulseCounter
+        if (!rstn) begin
+            pulses <= 0;
+            pulseCount <= 0;
+        end else if (home) begin
+            pulses <= 0;
+            pulseCount <= 0;
+        end else begin
+            if (intervalCount == (MAXCOUNT - 1)) begin
+                intervalCount <= 0;
+                pulses <= 0;
+                pulseCount <= pulses;
+            end else begin
+                intervalCount <= intervalCount + 1;
+                if (countEnable) begin
+                    pulses <= pulses + 1;
+                end
+            end
+        end
+    end
+
+    // gives pcSpeed in pi*radians/second
+    assign pcSpeedDenom = (ENC_CYCLES_PER_REV * SAMPLETIME) << 5;
+    assign pcSpeedNumer = (2 * pulseCount) << 5;
+    assign pcSpeedBig = pcSpeedNumer / pcSpeedDenom; //TODO: Check this math
+
+/////////////////////////////////////////////////////////////////////
+//PULSE TIMING SPEED
+/////////////////////////////////////////////////////////////////////
+
+    //less accurate at high speeds
+    always_ff @( posedge sclk ) begin : pulseTimer
+        if (!rstn) begin
+            clocks <= 0;
+        end else if (home) begin
+            clocks <= 0;
+        end else begin
+            if (countEnable) begin
+                clocks <= 0;
+                clockCount <= clocks;
+            end else begin
+                clocks <= clocks + 1;
+            end
+        end
+    end
+
+    //gives ptSpeed in pi*radians/second
+    assign ptSpeedDenom = (ENC_COUNTS_PER_REV * clockCount) << 5;
+    assign ptSpeedNumer = (2 * SYSCLK_FREQ) << 5;
+    assign ptSpeedBig = ptSpeedNumer / ptSpeedDenom; //TODO: check this math
+
+
 endmodule
