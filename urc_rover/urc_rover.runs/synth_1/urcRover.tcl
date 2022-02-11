@@ -89,7 +89,11 @@ OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/roversPackage.sv}
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/CPUComms.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/GPS.sv}
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/I2CSlave.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/NMEAparser.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/quadratureEnc.sv}
+  {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/wheelEncoders.sv}
   {D:/SPEX projects/rover_firmware/urc_rover/src/hdl/urcRover.sv}
 }
 read_ip -quiet {{D:/SPEX projects/rover_firmware/urc_rover/urc_rover.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}

@@ -27,11 +27,16 @@ module urcRover #(
     input OSCCLK,
     input EXTRST,
 
-    output UART_TX,
+    inout SDA,
+    input SCL,
 
     input [NUM_ADCS-1:0] ADC_SDAT,
-    output ADC_CS,
-    output ADC_MCLK
+    input [NUM_ADCS-1:0] ADC_MCLK,
+
+    input [3:0] ENC_ABS,
+    input [3:0] ENC_A,
+    input [3:0] ENC_B,
+    input [3:0] ENC_I
     
 );
 
@@ -83,6 +88,18 @@ clk_wiz_0 clkgen(
 //    .mclk(ADC_MCLK),
 //    .outData(railOutData)
 //);
+
+wheelEncoders #(
+    .SYSCLK_FREQ(SYSCLK_FREQ)
+) speedy (
+    .sclk(clk_100M)
+);
+
+GPS #(
+    .SYSCLK_FREQ(SYSCLK_FREQ)
+) jeeps (
+    .sclk(clk_100M)
+);
 
 CPUComms #(
     .SYSCLK_FREQ(SYSCLK_FREQ)

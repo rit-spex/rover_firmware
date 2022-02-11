@@ -30,8 +30,8 @@ module serialController #(
     //data inputs
 
     //data output
-    output bus08_t outByte   = 0,
-    output logic   dataReady = 0
+    output bus08_t outByte,
+    output logic   dataReady
 );
 
     logic transmitting   = 0;
