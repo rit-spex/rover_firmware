@@ -36,7 +36,7 @@ module quadratureEnc #(
     logic [2:0] a_delayed, b_delayed;
 
     //synchro
-    always_ff @( negedge rstn, posedge sclk ) begin : synchro
+    always_ff @(posedge sclk ) begin : synchro
         if (!rstn) begin
             a_delayed <= 0;
             b_delayed <= 0;
@@ -51,7 +51,7 @@ module quadratureEnc #(
     wire countDir = a_delayed[1] ^ b_delayed[2];
 
     //counter
-    always_ff @( negedge rstn, posedge sclk ) begin : counter
+    always_ff @(posedge sclk ) begin : counter
         if (!rstn) begin
             count <= 0;
         end else if (home) begin
