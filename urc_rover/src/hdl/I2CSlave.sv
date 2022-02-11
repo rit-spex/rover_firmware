@@ -32,7 +32,7 @@ module I2CSlave #(
     //FPGA
     input rstn,
 
-    //8-bit read/write registers
+    //8-bit wide read/write registers
     input   bus08_t readReg [HI_RD-1:0],
     output  bus08_t writeReg [HI_WR-1:0]
 );
@@ -48,11 +48,11 @@ logic   stopResetter;   //resets the STOP code detector
 logic   masterAck;      //master acknowledge
 logic   outputControl;  //control tri-state outputs
 
-bus04_t bitCounter;
+bus04_t bitCounter;     //counts bits into current message
 
-bus08_t inputShift;
-bus08_t outputShift;
-bus08_t indexPointer;
+bus08_t inputShift;     //shift inputs 
+bus08_t outputShift;    //shift outputs
+bus08_t indexPointer;   //points to current register index
 
 enum logic [4:0] { IDLE, DEV_ADDR, READ, IDX_PTR, WRITE } state;
 
