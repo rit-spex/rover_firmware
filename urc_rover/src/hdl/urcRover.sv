@@ -22,7 +22,12 @@ import roversPackage::*;
 
 module urcRover #(
     parameter SYSCLK_FREQ = 100_000_000,
-    parameter NUM_ADCS = 5
+    parameter NUM_ADCS = 5,
+    parameter NUM_ENC = 4,
+
+    parameter ENC_CYCLES_PER_REV = 2048,
+    parameter ENC_COUNTS_PER_REV = ENC_CYCLES_PER_REV * 4,
+    parameter ENC_COUNT_SIZE = $clog2(ENC_COUNTS_PER_REV)
 )(
     input OSCCLK,
     input EXTRST,
@@ -33,10 +38,10 @@ module urcRover #(
     input [NUM_ADCS-1:0] ADC_SDAT,
     input [NUM_ADCS-1:0] ADC_MCLK,
 
-    input [3:0] ENC_ABS,
-    input [3:0] ENC_A,
-    input [3:0] ENC_B,
-    input [3:0] ENC_I
+    input [NUM_ENC-1:0] ENC_ABS,
+    input [NUM_ENC-1:0] ENC_A,
+    input [NUM_ENC-1:0] ENC_B,
+    input [NUM_ENC-1:0] ENC_I
     
 );
 
@@ -46,6 +51,11 @@ wire sysRstn;
 wire uartStart;
 wire uartBusy;
 wire uartReady;
+
+wire encHome;
+wire [ENC_COUNT_SIZE-1:0] encCount [NUM_ENC-1:0];
+wire [10:-5] pcSpeed [NUM_ENC-1:0];
+wire [10:-5] ptSpeed [NUM_ENC-1:0];
 
 wire [7:0] uartData;
 
@@ -89,12 +99,6 @@ clk_wiz_0 clkgen(
 //    .outData(railOutData)
 //);
 
-wheelEncoders #(
-    .SYSCLK_FREQ(SYSCLK_FREQ)
-) speedy (
-    .sclk(clk_100M)
-);
-
 GPS #(
     .SYSCLK_FREQ(SYSCLK_FREQ)
 ) jeeps (
@@ -105,8 +109,29 @@ CPUComms #(
     .SYSCLK_FREQ(SYSCLK_FREQ)
 ) comms (
     .sclk(clk_100M),
-    .rstn(sysRstn)
+    .rstn(sysRstn),
+    .SDA(SDA),
+    .SCL(SCL)
 );
+
+genvar i;
+generate
+    for (i = 0;i < NUM_ENC;i = i + 1) begin
+        quadratureEnc #(
+            .SYSCLK_FREQ(SYSCLK_FREQ)
+        ) quad (
+            .sclk(clk_100M),
+            .rstn(sysRstn),
+            .enc_a(ENC_A[i]),
+            .enc_b(ENC_A[i]),
+            .enc_i(ENC_I[i]),
+            .home(encHome),
+            .count(encCount[i]),
+            .pcSpeed(pcSpeed[i]),
+            .ptSpeed(ptSpeed[i])
+        );
+    end
+endgenerate
 
 // serialController #(
 //     .CLKFREQ(SYSCLK_FREQ)
