@@ -199,7 +199,7 @@ end
 //addressed for writing, and if so, we latch the value in the input
 //shift register.
 generate
-    for (i = 0; i <= HI_WR; i = i+1) begin : registerWritesGen
+    for (i = 0; i < HI_WR; i = i+1) begin : registerWritesGen
         always_ff @( posedge rst, negedge SCL ) begin : regWrites
             if (rst) begin
                 writeReg[i] <= 0;
@@ -212,7 +212,7 @@ endgenerate
 
 //output shift register must be loaded before ADK bit
 generate
-    for (j = 0;j <= HI_RD; j = j+1) begin : registerReadsGen
+    for (j = 0;j < HI_RD; j = j+1) begin : registerReadsGen
 
         always_ff @( negedge SCL ) begin : regReads
             if (lsbBit) begin
