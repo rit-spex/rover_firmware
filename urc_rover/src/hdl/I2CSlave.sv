@@ -9,6 +9,7 @@
 // Target Devices: Artix 7 35Txvlog
 // Tool Versions: Vivado 2020.2
 // Description: I2C communications bus slave module
+//              Read/Write terms are from the Master's perspective
 // 
 // Dependencies: 
 // 
@@ -33,7 +34,7 @@ module I2CSlave #(
     input rstn,
 
     //8-bit wide read/write registers
-    input   bus08_t readReg [HI_RD-1:0],
+    input   bus08_t readReg  [HI_RD-1:0],
     output  bus08_t writeReg [HI_WR-1:0]
 );
 
@@ -70,7 +71,6 @@ genvar i,j;
 /////////////////////////////////////////////////////////////////////
 //START DETECTION
 /////////////////////////////////////////////////////////////////////
-
 
 always_ff @ (posedge startRst, negedge SDA) begin : startDetector1
     if (startRst)
@@ -207,7 +207,6 @@ generate
         end
     end
 endgenerate
-
 
 //output shift register must be loaded before ADK bit
 generate
