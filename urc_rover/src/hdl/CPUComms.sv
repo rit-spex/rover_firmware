@@ -23,13 +23,16 @@ import roversPackage::*;
 module CPUComms #(
     parameter SYSCLK_FREQ = 100_000_000
 ) (
-    input sclk, rstn
+    input sclk, rstn,
+    input SDA,
+    inout SCL
 );
 
 I2CSlave #(
-
+    .DEVICE_ADDR(7'h55)
 ) I2C (
-    
+    .SDA(SDA),
+    .SCL(SCL)
 );
     
 endmodule
