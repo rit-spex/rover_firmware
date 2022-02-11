@@ -130,6 +130,8 @@ end
 //FSM
 /////////////////////////////////////////////////////////////////////
 
+//This FSM controls slave actions in any given message. It is re-entered
+//at a different entry point depending on the type of message rec'd.
 always_ff @( posedge rst, negedge SCL ) begin : FSM
     if (rst) begin
         state <= IDLE;
