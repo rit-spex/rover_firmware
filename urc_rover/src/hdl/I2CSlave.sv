@@ -234,7 +234,7 @@ assign SDA = outputControl ? 1'bz : 1'b0;
 
 //This logic is a little subtle, because we have to set the state for
 //the next SCL clock cycle, taking into account that the state
-//machine’s state for the next cycle may not be the same as what it
+//machine's state for the next cycle may not be the same as what it
 //is for the current cycle
 always_ff @( posedge rst, negedge SCL ) begin : outputDriver
     if (rst) begin
