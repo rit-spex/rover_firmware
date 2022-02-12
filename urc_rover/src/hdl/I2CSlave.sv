@@ -79,7 +79,7 @@ always_ff @ (posedge startRst, negedge SDA) begin : startDetector1
         startDetect <= SCL;
 end
 
-always_ff @ (posedge rst, posedge SCL) begin : startDetector2
+always_ff @ (posedge SCL) begin : startDetector2
     if (rst)
         startResetter <= 0;
     else
@@ -97,7 +97,7 @@ always_ff @(posedge stopRst, posedge SDA ) begin : stopDetector1
         stopDetect <= SCL;
 end
 
-always_ff @(posedge rst, posedge SCL ) begin : stopDetector2
+always_ff @(posedge SCL ) begin : stopDetector2
     if (rst)
         stopResetter <= 1;
     else
@@ -132,7 +132,7 @@ end
 
 //This FSM controls slave actions in any given message. It is re-entered
 //at a different entry point depending on the type of message rec'd.
-always_ff @( posedge rst, negedge SCL ) begin : FSM
+always_ff @( negedge SCL ) begin : FSM
     if (rst) begin
         state <= IDLE;
     end else if (startDetect) begin
@@ -181,7 +181,7 @@ end
 //index pointer is loaded by the first transfer in a write transaction,
 //incremented every other transfer, and reset on a START condition
 //(but not RESTART).
-always_ff @( posedge rst, negedge SCL) begin : indexPointerXfer
+always_ff @( negedge SCL) begin : indexPointerXfer
     if (rst) begin
         indexPointer <= 0;
     end else if (stopDetect) begin
@@ -200,7 +200,7 @@ end
 //shift register.
 generate
     for (i = 0; i <= HI_WR; i = i+1) begin : registerWritesGen
-        always_ff @( posedge rst, negedge SCL ) begin : regWrites
+        always_ff @( negedge SCL ) begin : regWrites
             if (rst) begin
                 writeReg[i] <= 0;
             end else if (writeStrobe && (indexPointer == 8'h03)) begin
@@ -236,7 +236,7 @@ assign SDA = outputControl ? 1'bz : 1'b0;
 //the next SCL clock cycle, taking into account that the state
 //machine's state for the next cycle may not be the same as what it
 //is for the current cycle
-always_ff @( posedge rst, negedge SCL ) begin : outputDriver
+always_ff @( negedge SCL ) begin : outputDriver
     if (rst) begin
         outputControl <= 1'b1;
     end else if (startDetect) begin
