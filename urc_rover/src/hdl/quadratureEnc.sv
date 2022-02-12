@@ -37,8 +37,8 @@ module quadratureEnc #(
 
     output logic [ENC_COUNT_SIZE-1:0] count,
 
-    output wire [10:-5] pcSpeed, //11 bits integer, 5 bits fractional
-    output wire [10:-5] ptSpeed  //11 bits integer, 5 bits fractional
+    output logic signed [10:-5] pcSpeed, //11 bits integer, 5 bits fractional
+    output logic signed [10:-5] ptSpeed  //11 bits integer, 5 bits fractional
 );
 
     wire [31:0] pcSpeedBig, pcSpeedDenom, pcSpeedNumer;
@@ -47,6 +47,11 @@ module quadratureEnc #(
     logic [31:0] intervalCount, pulses, pulseCount, clocks, clockCount;
 
     logic [2:0] a_delayed, b_delayed;
+
+    always_ff @( negedge sclk ) begin : outputLatch
+        pcSpeed <= pcSpeedBig;
+        ptSpeed <= ptSpeedBig;
+    end
 
 /////////////////////////////////////////////////////////////////////
 //SYNCHRO
