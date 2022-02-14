@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1644560789">
   <File Type="PA-TCL" Name="urcRover.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="urcRover_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="urcRover_reports.tcl"/>
   <File Type="RDS-RDS" Name="urcRover.vds"/>
   <File Type="RDS-UTIL" Name="urcRover_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="urcRover_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="urcRover.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="urcRover_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="urcRover_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/src/hdl/roversPackage.sv">
