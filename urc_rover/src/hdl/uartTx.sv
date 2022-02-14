@@ -1,5 +1,24 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company: RIT SPEX
+// Engineer: Alexander Olds
+// 
+// Create Date: 02/10/2021 11:13:42 PM
+// Design Name: uartTx
+// Module Name: roversPackage
+// Project Name: urc_rover
+// Target Devices: Artix 7 35T
+// Tool Versions: Vivado 2020.2
+// Description: configurable UART transmitter
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-module uartBlaster #(
+module uartTx #(
     parameter CLKFREQ = 100_000_000,    //100 MHz
     parameter BAUDRATE = 9600,
     parameter CLKS_PER_BIT = CLKFREQ/BAUDRATE
@@ -8,7 +27,7 @@ module uartBlaster #(
     input wire       start,
     input wire [7:0] data ,
 
-    output logic uartTx  = 0,
+    output logic uartTx   ,
     output wire  busy     ,
     output wire  ready
 );
