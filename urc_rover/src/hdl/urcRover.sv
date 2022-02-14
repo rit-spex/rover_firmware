@@ -35,6 +35,8 @@ module urcRover #(
     inout SDA,
     input SCL,
 
+    input GPSUART,
+
     input [NUM_ADCS-1:0] ADC_SDAT,
     input [NUM_ADCS-1:0] ADC_MCLK,
 
@@ -58,6 +60,9 @@ wire [10:-5] pcSpeed [NUM_ENC-1:0];
 wire [10:-5] ptSpeed [NUM_ENC-1:0];
 
 wire [7:0] uartData;
+
+wire [7:0] GPSdata;
+wire       GPSready;
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -145,18 +150,35 @@ endgenerate
 //     .outByte(uartData)
 // );
 
-// uartBlaster #(
-//     .CLKFREQ(SYSCLK_FREQ),
-//     .BAUDRATE(115200)
-// ) gottaBlast (
-//     .clk(clk_100M),
-//     .start(uartStart),
-//     .data(uartData),
+async_transmitter #(
+    .ClkFrequency(SYSCLK_FREQ),
+    .Baud(9600)
+) gottaBlast (
+    .clk(clk_100M),
+    .rst(~rstn),
+    .TxD_Start(uartStart),
+    .txD(UART_TX),
+    .TxD_data(0),
+    .TxD_busy(uartBusy)
+);
 
-//     .uartTx(UART_TX),
-//     .busy(uartBusy),
-//     .ready(uartReady)
-// );
+async_receiver #(
+    .ClkFrequency(SYSCLK_FREQ),
+    .Baud(9600)
+) GPSrx (
+    .clk(clk_100M),
+    .rst(~rstn),
+    .RxD(GPSUART),
+    .RxD_data(GPSdata),
+    .RxD_data_ready(GPSready)
+);
+
+NMEAparser #(
+    .SYSCLK_FREQ(SYSCLK_FREQ)
+) nmea (
+    .sclk(clk_100M),
+    .rstn(rstn)
+);
 
 
 endmodule:urcRover

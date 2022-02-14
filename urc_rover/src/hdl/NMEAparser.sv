@@ -8,12 +8,12 @@
 // Project Name: urc_rover
 // Target Devices: Artix 7 35T
 // Tool Versions: Vivado 2020.2
-// Description: parses NMEA GPSPMC string from GPS
+// Description: parses NMEA GPSGGA string from GPS
 // 
-//  Example of GPSPMC String:
+//  Example of GPSGGA String:
 //  
-//  $GPGGA,hhmmss.ss,llll.ll,a,yyyyy.yy,a,x,xx,x.x,x.x,M,x.x,M,x.x,xxxx*hh
-//              1       2    3     4    5 6  7  8   9  10 11 12 13  14  15
+//  $GPGGA,hhmmss.sss,ddmm.mmmm,a,dddmm.mmmm,a,x,x,x.xx,xx.x,M,xx.x,M,x.x,*hh<CR><LF>
+//              1         2     3      4     5 6 7  8    9   10 11  12 13  14  
 //  1    = UTC of Position
 //  2    = Latitude
 //  3    = N or S
@@ -28,8 +28,8 @@
 //         mean sea level.  -=geoid is below WGS-84 ellipsoid)
 //  12   = Meters  (Units of geoidal separation)
 //  13   = Age in seconds since last update from diff. reference station
-//  14   = Diff. reference station ID#
-//  15   = Checksum
+//  14   = Checksum (bitwise XOR of all codes between $ and *, not inclusive)
+//  <CR><LF> end of message 
 //
 // Dependencies: 
 // 
@@ -45,10 +45,24 @@ module NMEAparser #(
     input sclk,
     input rstn,
 
-    input [559:0] dataString, //66 bytes (70 ASCII chars) 
+    input [7:0] dataString, 
 
-    output values
+    output logic [ 9:0] timestamp   [7:0],
+    output logic [ 9:0] latitude    [7:0], //ddmm.mmmmX
+    output logic [10:0] longitude   [7:0], //dddmm.mmmmX
+    output logic        quality     [7:0], //0=invalid; 1=GPS fix; 2=Diff. GPS fix
+    output logic        numSats     [7:0],
+    output logic [3:0]  hdop        [7:0],
+    output logic [3:0]  altMSL      [7:0],
+    output logic [3:0]  geoid       [7:0],
 
+    output logic GPSReady //goes high when all data is valid
 );
+
+
+
+/////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////
     
 endmodule
