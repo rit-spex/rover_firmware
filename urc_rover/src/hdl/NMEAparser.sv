@@ -46,15 +46,9 @@ module NMEAparser #(
     input rstn,
 
     input [7:0] dataString, 
+    input       dataReady,
 
-    output logic [ 9:0] timestamp   [7:0],
-    output logic [ 9:0] latitude    [7:0], //ddmm.mmmmX
-    output logic [10:0] longitude   [7:0], //dddmm.mmmmX
-    output logic        quality     [7:0], //0=invalid; 1=GPS fix; 2=Diff. GPS fix
-    output logic        numSats     [7:0],
-    output logic [3:0]  hdop        [7:0],
-    output logic [3:0]  altMSL      [7:0],
-    output logic [3:0]  geoid       [7:0],
+    GPSdata gpsResults,
 
     output logic GPSReady //goes high when all data is valid
 );

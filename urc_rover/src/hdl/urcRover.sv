@@ -20,6 +20,17 @@
 
 import roversPackage::*;
 
+interface GPSdata;
+        logic [ 9:0] timestamp   [7:0];
+        logic [ 9:0] latitude    [7:0];
+        logic [10:0] longitude   [7:0];
+        logic        quality     [7:0];
+        logic        numSats     [7:0];
+        logic [ 3:0] hdop        [7:0];
+        logic [ 3:0] altMSL      [7:0];
+        logic [ 3:0] geoid       [7:0];
+endinterface:GPSdata
+
 module urcRover #(
     parameter SYSCLK_FREQ = 100_000_000,
     parameter NUM_ADCS = 5,
@@ -64,6 +75,9 @@ wire [7:0] uartData;
 wire [7:0] GPSdata;
 wire       GPSready;
 
+//Interfaces
+GPSdata GPSresults();
+
 
 //////////////////////////////////////////////////////////////////////////////////
 // Top level Logic
@@ -107,7 +121,11 @@ clk_wiz_0 clkgen(
 GPS #(
     .SYSCLK_FREQ(SYSCLK_FREQ)
 ) jeeps (
-    .sclk(clk_100M)
+    .sclk(clk_100M),
+    .rstn(rstn),
+    .GPSuart(GPSUART),
+
+    .GPSresults(GPSresults)
 );
 
 CPUComms #(
@@ -116,7 +134,13 @@ CPUComms #(
     .sclk(clk_100M),
     .rstn(sysRstn),
     .SDA(SDA),
-    .SCL(SCL)
+    .SCL(SCL),
+
+    .encCount(encCount),
+    .encpcSpeed(pcSpeed),
+    .encptSpeed(ptSpeed),
+
+    .GPSresults(GPSresults)
 );
 
 genvar i;
@@ -150,35 +174,17 @@ endgenerate
 //     .outByte(uartData)
 // );
 
-async_transmitter #(
-    .ClkFrequency(SYSCLK_FREQ),
-    .Baud(9600)
-) gottaBlast (
-    .clk(clk_100M),
-    .rst(~rstn),
-    .TxD_Start(uartStart),
-    .txD(UART_TX),
-    .TxD_data(0),
-    .TxD_busy(uartBusy)
-);
-
-async_receiver #(
-    .ClkFrequency(SYSCLK_FREQ),
-    .Baud(9600)
-) GPSrx (
-    .clk(clk_100M),
-    .rst(~rstn),
-    .RxD(GPSUART),
-    .RxD_data(GPSdata),
-    .RxD_data_ready(GPSready)
-);
-
-NMEAparser #(
-    .SYSCLK_FREQ(SYSCLK_FREQ)
-) nmea (
-    .sclk(clk_100M),
-    .rstn(rstn)
-);
+//async_transmitter #(
+//    .ClkFrequency(SYSCLK_FREQ),
+//    .Baud(9600)
+//) gottaBlast (
+//    .clk(clk_100M),
+//    .rst(~rstn),
+//    .TxD_Start(uartStart),
+//    .txD(UART_TX),
+//    .TxD_data(0),
+//    .TxD_busy(uartBusy)
+//);
 
 
 endmodule:urcRover

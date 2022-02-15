@@ -24,25 +24,34 @@ module GPS #(
     input sclk,
     input rstn,
 
-    input GPSdata,
+    input GPSuart,
     
-    output logic GPStime,
-    output logic GPSlatitude,
-    output logic GPSlongitude,
-    output logic GPSquality,
-    output logic GPSnumSats,
-    output logic GPSspeed,
-    output logic GPSaccuracy,
-    output logic GPSaltitude,
-    output logic GPSheight
+    GPSdata GPSresults
 );
 
+wire       dataReady;
+wire [7:0] GPSdata;
+
+
+async_receiver #(
+    .ClkFrequency(SYSCLK_FREQ),
+    .Baud(9600)
+) GPSrx (
+    .clk(clk_100M),
+    .rst(~rstn),
+    .RxD(GPSuart),
+    .RxD_data(GPSdata),
+    .RxD_data_ready(dataReady)
+);
 
 NMEAparser #(
     .SYSCLK_FREQ(SYSCLK_FREQ)
 ) parser (
     .sclk(sclk),
     .rstn(rstn),
-    .dataString(GPSdata)
+    .dataReady(dataReady),
+    .dataString(GPSdata),
+    .GPSresults(gpsResults)
 );
+
 endmodule
