@@ -18,6 +18,10 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`define SENSE_DEC
+//`define GPS_DEC
+//`define CPUCOMMS_DEC
+
 import roversPackage::*;
 
 interface GPSdata;
@@ -106,18 +110,21 @@ clk_wiz_0 clkgen(
 // Module Declarations
 //////////////////////////////////////////////////////////////////////////////////
 
-//railSensors #(
-//    .SYSCLK_FREQ(SYSCLK_FREQ),
-//    .NUMADCS(NUM_ADCS)
-//) sensing (
-//    .sclk(clk_100M),
-//    .rstn(sysRstn),
-//    .sdat(ADC_SDAT),
-//    .cs(ADC_CS),
-//    .mclk(ADC_MCLK),
-//    .outData(railOutData)
-//);
+`ifdef SENSE_DEC
+railSensors #(
+    .SYSCLK_FREQ(SYSCLK_FREQ),
+    .NUMADCS(NUM_ADCS)
+) sensing (
+    .sclk(clk_100M),
+    .rstn(sysRstn),
+    .sdat(ADC_SDAT),
+    .cs(ADC_CS),
+    .mclk(ADC_MCLK),
+    .outData(railOutData)
+);
+`endif
 
+`ifdef GPS_DEC
 GPS #(
     .SYSCLK_FREQ(SYSCLK_FREQ)
 ) jeeps (
@@ -127,7 +134,9 @@ GPS #(
 
     .GPSresults(GPSresults)
 );
+`endif
 
+`ifdef CPUCOMMS_DEC
 CPUComms #(
     .SYSCLK_FREQ(SYSCLK_FREQ)
 ) comms (
@@ -142,7 +151,9 @@ CPUComms #(
 
     .GPSresults(GPSresults)
 );
+`endif
 
+`ifdef ENC_DEC
 genvar i;
 generate
     for (i = 0;i < NUM_ENC;i = i + 1) begin
@@ -161,6 +172,7 @@ generate
         );
     end
 endgenerate
+`endif
 
 // serialController #(
 //     .CLKFREQ(SYSCLK_FREQ)
