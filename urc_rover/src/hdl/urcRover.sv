@@ -25,14 +25,14 @@
 import roversPackage::*;
 
 interface GPSdata;
-        logic [ 9:0] timestamp   [7:0];
-        logic [ 9:0] latitude    [7:0];
-        logic [10:0] longitude   [7:0];
-        logic        quality     [7:0];
-        logic        numSats     [7:0];
-        logic [ 3:0] hdop        [7:0];
-        logic [ 3:0] altMSL      [7:0];
-        logic [ 3:0] geoid       [7:0];
+        logic [ 9:0] [7:0] timestamp;
+        logic [ 9:0] [7:0] latitude ;
+        logic [10:0] [7:0] longitude;
+        logic        [7:0] quality  ;
+        logic        [7:0] numSats  ;
+        logic [ 3:0] [7:0] hdop     ;
+        logic [ 3:0] [7:0] altMSL   ;
+        logic [ 3:0] [7:0] geoid    ;
 endinterface:GPSdata
 
 module urcRover #(
