@@ -53,28 +53,29 @@ module NMEAparser #(
     output logic GPSReady //goes high when all data is valid
 );
 
-    logic [ 5:0] gpgga       [7:0]; //0
-    logic [10:0] utc         [7:0]; //1
-    logic [ 9:0] latitude    [7:0]; //2
-    logic [ 1:0] ns          [7:0]; //3
-    logic [10:0] longitude   [7:0]; //4
-    logic [ 1:0] ew          [7:0]; //5
-    logic [ 1:0] quality     [7:0]; //6
-    logic [ 1:0] numSats     [7:0]; //7
-    logic [ 4:0] hdop        [7:0]; //8
-    logic [ 4:0] geoid       [7:0]; //9
-    logic [ 1:0] metersH     [7:0]; //10
-    logic [ 4:0] geoidal     [7:0]; //11
-    logic [ 1:0] metersG     [7:0]; //12
-    logic [ 3:0] age         [7:0]; //13
-    logic [ 1:0] cSum        [7:0]; //11
+    logic [ 5:0] [7:0] gpgga    ; //0
+    logic [10:0] [7:0] utc      ; //1
+    logic [ 9:0] [7:0] latitude ; //2
+    logic [ 1:0] [7:0] ns       ; //3
+    logic [10:0] [7:0] longitude; //4
+    logic [ 1:0] [7:0] ew       ; //5
+    logic [ 1:0] [7:0] quality  ; //6
+    logic [ 1:0] [7:0] numSats  ; //7
+    logic [ 4:0] [7:0] hdop     ; //8
+    logic [ 4:0] [7:0] geoid    ; //9
+    logic [ 1:0] [7:0] metersH  ; //10
+    logic [ 4:0] [7:0] geoidal  ; //11
+    logic [ 1:0] [7:0] metersG  ; //12
+    logic [ 3:0] [7:0] age      ; //13
+    logic [ 1:0] [7:0] checksum ; //14
+    logic [ 1:0] [7:0] cSum     ; //15
     //logic [ 3:0] altMSL      [7:0]; //14
-    int olst, st;
+    logic olst, st;
 
     always_ff @(posedge sclk ) begin : parser
         //check if reset (active low)
         if ((!rstn) || (st == 99)) begin
-            dataReady <= 0;
+            GPSReady <= 0;
             gpgga <= 0;
             utc <= 0;
             latitude <= 0;
@@ -94,24 +95,24 @@ module NMEAparser #(
         end 
         //check for $
         else if (!(dataString ^ 8'b00100100)) begin
-            dataReady <= 0
+            GPSReady <= 0;
             st <= 2;
         end 
         //validate GPGGA after $
         else if ((st >= 2) && (st < 7)) begin
-            if ((st == 2) && (!(dataString ^ 8'b01000111)) begin
+            if ((st == 2) && (!(dataString ^ 8'b01000111))) begin
                 gpgga[5] <= dataString;
                 st <= 3;
-            end else if ((st == 3) && (!(dataString ^ 8'b01010000)) begin
+            end else if ((st == 3) && (!(dataString ^ 8'b01010000))) begin
                 gpgga[4] <= dataString;
                 st <= 4;
-            end else if ((st == 4) && (!(dataString ^ 8'b01000111)) begin
+            end else if ((st == 4) && (!(dataString ^ 8'b01000111))) begin
                 gpgga[3] <= dataString;
                 st <= 5;
-            end else if ((st == 5) && (!(dataString ^ 8'b01000111)) begin
+            end else if ((st == 5) && (!(dataString ^ 8'b01000111))) begin
                 gpgga[2] <= dataString;
                 st <= 6;
-            end else if ((st == 6) && (!(dataString ^ 8'b01000001)) begin
+            end else if ((st == 6) && (!(dataString ^ 8'b01000001))) begin
                 gpgga[1] <= dataString;
                 st <= 7;
             end else begin
@@ -133,42 +134,43 @@ module NMEAparser #(
                 end
             //fill arrays with values
             end else if (st < 82) begin
-                if ((st >= 8) && (st < 18) begin
+                if ((st >= 8) && (st < 18)) begin
                     utc[17-st] = dataString;
-                end else if ((st >= 19) && (st < 28) begin
+                end else if ((st >= 19) && (st < 28)) begin
                     latitude[27-st] = dataString;
-                end else if ((st >= 29) && (st < 30) begin
+                end else if ((st >= 29) && (st < 30)) begin
                     ns[29-st] = dataString;
-                end else if ((st >= 31) && (st < 41) begin
+                end else if ((st >= 31) && (st < 41)) begin
                     longitude[40-st] = dataString;
-                end else if ((st >= 42) && (st < 43) begin
+                end else if ((st >= 42) && (st < 43)) begin
                     ew[42-st] = dataString;
-                end else if ((st >= 44) && (st < 45) begin
+                end else if ((st >= 44) && (st < 45)) begin
                     quality[44-st] = dataString;
-                end else if ((st >= 46) && (st < 47) begin
+                end else if ((st >= 46) && (st < 47)) begin
                     numSats[46-st] = dataString;
-                end else if ((st >= 48) && (st < 52) begin
+                end else if ((st >= 48) && (st < 52)) begin
                     hdop[51-st] = dataString;
-                end else if ((st >= 53) && (st < 57) begin
+                end else if ((st >= 53) && (st < 57)) begin
                     geoid[56-st] = dataString;
-                end else if ((st >= 58) && (st < 59) begin
+                end else if ((st >= 58) && (st < 59)) begin
                     metersH[58-st] = dataString;
-                end else if ((st >= 60) && (st < 64) begin
+                end else if ((st >= 60) && (st < 64)) begin
                     geoidal[63-st] = dataString;
-                end else if ((st >= 65) && (st < 66) begin
+                end else if ((st >= 65) && (st < 66)) begin
                     metersG[65-st] = dataString;
-                end else if ((st >= 67) && (st < 70) begin
+                end else if ((st >= 67) && (st < 70)) begin
                     age[69-st] = dataString;
-                end else if ((st >= 71) && (st < 81) begin
+                end else if ((st >= 71) && (st < 81)) begin
                     checksum[80-st] = dataString;
+                st++;
                 //Checksum
                 end else begin
-                    cSum = gpgga ^ utc ^ latitude ^ ns ^ longitude ^ ew ^ quality ^ satellites ^ dilution ^ altitude ^ metersH ^ geoidal ^ metersG ^ age;
+                    cSum = gpgga ^ utc ^ latitude ^ ns ^ longitude ^ ew ^ quality ^ numSats ^ dilution ^ altitude ^ metersH ^ geoidal ^ metersG ^ age;
                     //data ready
                     if (!(cSum ^ checksum)) begin
-                        dataReady = 1;
+                        GPSReady <= 1;
                     end else begin
-                        dataReady <= 0;
+                        GPSReady <= 0;
                         st <= 99;
                     end
                 end
