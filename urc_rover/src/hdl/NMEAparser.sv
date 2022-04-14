@@ -93,11 +93,11 @@ module NMEAparser #(
 
                 FORMAT: begin
                     if (dataReady) begin //ONLY WORKS IF DATAREADY IS HIGH FOR ONLY 1 CLOCK CYCLE
-                        if (index >= 5) begin
-                            if (gpgga == {8'h67, 8'h70, 8'h67, 8'h67, 8'h61}) begin //check "gpgga"
+                        if (index >= 6) begin
+                            if (gpgga == {8'h47, 8'h50, 8'h47, 8'h47, 8'h41}) begin //check "GPGGA"
                                 if (dataByte == 8'h2C) begin //check ","
                                     index <= 0;
-                                    cSumCal = cSumCal ^ {gpgga, dataByte};
+                                    cSumCal <= cSumCal ^ dataByte; //XOR "," into checksum
                                     dataBlock <= TIMESTAMP;                 //need break statement?
                                 end else begin
                                     index <= 0;
@@ -107,10 +107,11 @@ module NMEAparser #(
                                 index <= 0;
                                 dataBlock <= IDLE;
                             end
+                        end else begin
+                            gpgga <= {gpgga[4:0], dataByte};
+                            cSumCal <= cSumCal ^ dataByte; //XOR current byte into checksum
+                            index <= index + 1;
                         end
-                        gpgga <= {gpgga[4:0], dataByte};                    //will this overwrite as "pgga," on its last loop?
-                        index <= index + 1;
-
                     end else begin
                         dataBlock <= FORMAT;
                     end
@@ -118,7 +119,7 @@ module NMEAparser #(
 
                 TIMESTAMP: begin
                     if (dataReady) begin
-                        if (index >= 10) begin
+                        if (index >= 11) begin
                             if (dataByte == 8'h2C) begin
                                 index <= 0;
                                 cSumCal = cSumCal ^ {gpgga, dataByte};
@@ -127,10 +128,10 @@ module NMEAparser #(
                                 index <= 0;
                                 dataBlock <= IDLE;
                             end
+                        end else begin
+                            utc <= {utc[9:0], dataByte};
+                            index <= index + 1;
                         end
-                        utc <= {utc[9:0], dataByte};
-                        index <= index + 1;
-
                     end else begin
                         dataBlock <= TIMESTAMP;
                     end
