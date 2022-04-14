@@ -50,7 +50,7 @@ module NMEAparser #(
 
     GPSdata gpsResults,
 
-    output logic GPSReady //goes high when all data is valid
+    output logic gpsReady //goes high when all data is valid
 );
 
     logic [ 5:0] [7:0] gpgga    ; //0
@@ -190,11 +190,11 @@ module NMEAparser #(
                         if (index >= 2) begin
                             if ((dataByte == 8'h3C) && (cSumIn == cSumCal)) begin //check "<"
                                 index <= 0;
-                                GPSReady <= 1;
+                                gpsReady <= 1;
                                 dataBlock <= IDLE;
                             end else begin
                                 index <= 0;
-                                GPSReady <= 0;
+                                gpsReady <= 0;
                                 dataBlock <= IDLE;
                             end
                         end
@@ -215,7 +215,7 @@ module NMEAparser #(
                 
             endcase
         end else begin //Reset
-            GPSReady <= 0;
+            gpsReady <= 0;
             gpgga <= 0;
             utc <= 0;
             latitude <= 0;
@@ -238,7 +238,7 @@ module NMEAparser #(
     // always_ff @(posedge sclk ) begin : parser
     //     //check if reset (active low)
     //     if ((!rstn) || (st == 99)) begin
-    //         GPSReady <= 0;
+    //         gpsReady <= 0;
     //         gpgga <= 0;
     //         utc <= 0;
     //         latitude <= 0;
@@ -258,7 +258,7 @@ module NMEAparser #(
     //     end 
     //     //check for $
     //     else if (!(dataByte ^ 8'b00100100)) begin
-    //         GPSReady <= 0;
+    //         gpsReady <= 0;
     //         st <= 2;
     //     end 
     //     //validate GPGGA after $
@@ -331,9 +331,9 @@ module NMEAparser #(
     //                 cSumCal = gpgga ^ utc ^ latitude ^ ns ^ longitude ^ ew ^ quality ^ numSats ^ dilution ^ altitude ^ metersH ^ geoidal ^ metersG ^ age;
     //                 //data ready
     //                 if (!(cSumCal ^ checksum)) begin
-    //                     GPSReady <= 1;
+    //                     gpsReady <= 1;
     //                 end else begin
-    //                     GPSReady <= 0;
+    //                     gpsReady <= 0;
     //                     st <= 99;
     //                 end
     //             end

@@ -26,7 +26,9 @@ module GPS #(
 
     input GPSuart,
     
-    GPSdata GPSresults
+    GPSdata GPSresults,
+
+    output wire gpsReady
 );
 
 wire       dataReady;
@@ -51,7 +53,8 @@ NMEAparser #(
     .rstn(rstn),
     .dataReady(dataReady),
     .dataString(GPSdata),
-    .GPSresults(gpsResults)
+    .gpsResults(gpsResults),
+    .gpsReady(gpsReady)
 );
 
 endmodule
