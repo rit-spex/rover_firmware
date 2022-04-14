@@ -67,65 +67,171 @@ module NMEAparser #(
     logic [ 4:0] [7:0] geoidal  ; //11
     logic [ 1:0] [7:0] metersG  ; //12
     logic [ 3:0] [7:0] age      ; //13
-    logic [ 1:0] [7:0] checksum ; //14
-    logic [ 1:0] [7:0] cSum     ; //15
+    logic [ 1:0] [7:0] cSumIn   ; //14
+    logic [ 1:0] [7:0] cSumCal  ; //15
     //logic [ 3:0] altMSL      [7:0]; //14
-    logic olst, st;
 
     logic [4:0] index;
 
-    enum logic[15:0] { IDLE, FORMAT, TIMESTAMP, LATITUDE, NS, LONGITUDE } dataBlock;
+    enum logic[15:0] { IDLE, FORMAT, TIMESTAMP, LATITUDE, NS, LONGITUDE, EW, QUALITY, NUMSATS, HDOP, GEOID, METERSH, GEOIDAL, METERSG, AGE, CHECKSUM } dataBlock;
 
     always_ff @(posedge sclk ) begin : parser
-        case (dataBlock)
-            IDLE: begin
-                
-            end
+        if (rstn) begin
+            case (dataBlock)
+                IDLE: begin
+                    if (dataReady) begin
+                        if (dataByte == 8'h24) begin //check "$"
+                            index <= 0;
+                            dataBlock <= FORMAT;
+                        end else begin
+                            dataBlock <= IDLE;
+                        end
+                    end else begin
+                        dataBlock <= IDLE;
+                    end
+                end
 
-            FORMAT: begin
-                if (dataReady) begin //ONLY WORKS IF DATAREADY IS HIGH FOR ONLY 1 CLOCK CYCLE
-                    if (index >= 5) begin
-                        if (gpgga == /*gpgga ASCII*/1) begin
-                            if (dataByte == /*comma ASCII*/1) begin
-                                index <= 0;
-                                dataBlock <= TIMESTAMP;
+                FORMAT: begin
+                    if (dataReady) begin //ONLY WORKS IF DATAREADY IS HIGH FOR ONLY 1 CLOCK CYCLE
+                        if (index >= 5) begin
+                            if (gpgga == {8'h67, 8'h70, 8'h67, 8'h67, 8'h61}) begin //check "gpgga"
+                                if (dataByte == 8'h2C) begin //check ","
+                                    index <= 0;
+                                    cSumCal = cSumCal ^ {gpgga, dataByte};
+                                    dataBlock <= TIMESTAMP;                 //need break statement?
+                                end else begin
+                                    index <= 0;
+                                    dataBlock <= IDLE;
+                                end
                             end else begin
                                 index <= 0;
                                 dataBlock <= IDLE;
                             end
-                        end else begin
-                            index <= 0;
-                            dataBlock <= IDLE;
                         end
+                        gpgga <= {gpgga[4:0], dataByte};                    //will this overwrite as "pgga," on its last loop?
+                        index <= index + 1;
+
+                    end else begin
+                        dataBlock <= FORMAT;
                     end
-                    gpgga <= {gpgga[4:0], dataByte};
-                    index <= index + 1;
-
-                end else begin
-                    dataBlock <= FORMAT;
                 end
-            end
 
-            TIMESTAMP: begin
+                TIMESTAMP: begin
+                    if (dataReady) begin
+                        if (index >= 10) begin
+                            if (dataByte == 8'h2C) begin
+                                index <= 0;
+                                cSumCal = cSumCal ^ {gpgga, dataByte};
+                                dataBlock <= LATITUDE;
+                            end else begin
+                                index <= 0;
+                                dataBlock <= IDLE;
+                            end
+                        end
+                        utc <= {utc[9:0], dataByte};
+                        index <= index + 1;
+
+                    end else begin
+                        dataBlock <= TIMESTAMP;
+                    end
+                end
+
+                LATITUDE: begin
+                    
+                end
+
+                NS: begin
+                    
+                end
+
+                LONGITUDE: begin
+                    
+                end
+
+                EW: begin
+                    
+                end
                 
-            end
-
-            LONGITUDE: begin
+                QUALITY: begin
+                    
+                end
                 
-            end
-
-            NS: begin
+                NUMSATS: begin
+                    
+                end
                 
-            end
-
-            LATITUDE: begin
+                HDOP: begin
+                    
+                end
                 
-            end
-            default: begin
-                datablock <= FORMAT;
-            end
-        endcase
+                GEOID: begin
+                    
+                end
+                
+                METERSH: begin
+                    
+                end
+                
+                GEOIDAL: begin
+                    
+                end
+                
+                METERSG: begin
+                    
+                end
+                
+                AGE: begin
+                    
+                end
+                
+                CHECKSUM: begin
+                    if (dataReady) begin
+                        if (index >= 2) begin
+                            if ((dataByte == 8'h3C) && (cSumIn == cSumCal)) begin //check "<"
+                                index <= 0;
+                                GPSReady <= 1;
+                                dataBlock <= IDLE;
+                            end else begin
+                                index <= 0;
+                                GPSReady <= 0;
+                                dataBlock <= IDLE;
+                            end
+                        end
+                        if (dataByte == 8'h2A) begin //check "*"
+                            dataBlock <= CHECKSUM;
+                        end else begin
+                            cSumIn <= {cSumIn[0], dataByte};
+                            index <= index + 1;
+                        end
+                    end else begin
+                        dataBlock <= CHECKSUM;
+                    end
+                end
 
+                default: begin
+                    dataBlock <= IDLE;
+                end
+                
+            endcase
+        end else begin //Reset
+            GPSReady <= 0;
+            gpgga <= 0;
+            utc <= 0;
+            latitude <= 0;
+            ns <= 0;
+            longitude <= 0;
+            ew <= 0;
+            quality <= 0;
+            numSats <= 0;
+            hdop <= 0;
+            geoid <= 0;
+            metersH <= 0;
+            geoidal <= 0;
+            metersG <= 0;
+            age <= 0;
+            cSumIn <= 0;
+            cSumCal <= 0;
+        end
     end
 
     // always_ff @(posedge sclk ) begin : parser
@@ -146,7 +252,7 @@ module NMEAparser #(
     //         geoidal <= 0;
     //         metersG <= 0;
     //         age <= 0;
-    //         cSum <= 0;
+    //         cSumCal <= 0;
     //         st <= 1;
     //     end 
     //     //check for $
@@ -221,9 +327,9 @@ module NMEAparser #(
     //             st++;
     //             //Checksum
     //             end else begin
-    //                 cSum = gpgga ^ utc ^ latitude ^ ns ^ longitude ^ ew ^ quality ^ numSats ^ dilution ^ altitude ^ metersH ^ geoidal ^ metersG ^ age;
+    //                 cSumCal = gpgga ^ utc ^ latitude ^ ns ^ longitude ^ ew ^ quality ^ numSats ^ dilution ^ altitude ^ metersH ^ geoidal ^ metersG ^ age;
     //                 //data ready
-    //                 if (!(cSum ^ checksum)) begin
+    //                 if (!(cSumCal ^ checksum)) begin
     //                     GPSReady <= 1;
     //                 end else begin
     //                     GPSReady <= 0;
